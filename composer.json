@@ -1,11 +1,3 @@
 {
-  require  {
-    silexsilex ^2.0.4,
-    monologmonolog ^1.22,
-    twigtwig ^2.0,
-    symfonytwig-bridge ^3
-  },
-  require-dev {
-    herokuheroku-buildpack-php 
-  }
+
 }
