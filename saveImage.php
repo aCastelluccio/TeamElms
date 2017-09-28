@@ -42,5 +42,6 @@ if(move_uploaded_file($temp_name, $target_path)) {
 }
 
 }
+echo '<meta http-equiv="refresh" content="0; URL=retrieve.php" />';
 
 ?>
