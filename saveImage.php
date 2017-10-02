@@ -34,7 +34,9 @@ if(move_uploaded_file($temp_name, $target_path)) {
  	#$query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$target_path."','".date("Y-m-d")."')";
     $query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$target_path."','".date("Y-m-d")."')";
     
-	mysqli_query($link, $query_upload) or die("error in $query_upload == ----> ".mysqli_error());  
+    
+	mysqli_query($link, $query_upload) or die("error in $query_upload == ----> ".mysqli_error()); 
+    
 	
 }else{
 
