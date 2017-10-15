@@ -1,9 +1,9 @@
 <?php
-$user = 'd2qpf22lyarz395l';
-$password = 'pejiin9edn8xmt5a';
-$db = 'py6etou4vck57kfy';
-$host = 'xq7t6tasopo9xxbs.cbetxkdyhwsb.us-east-1.rds.amazonaws.com';
-$port = 3306;
+$user = 'root';
+$password = 'root';
+$db = 'photoInfo';
+$host = 'localhost';
+$port = 8889;
 
 $link = mysqli_init();
 $conn = mysqli_real_connect(
@@ -14,6 +14,7 @@ $conn = mysqli_real_connect(
    $db,
    $port
 );
+
 if($conn)
 {
     $db_selected = mysqli_select_db($link, $db);
