@@ -1,10 +1,14 @@
 <?php 
 
-$mysqlUsr = 'root';
-$mysqlPass = 'root';
-$db = 'Authentication';         //Will need to be changed depending on the live servers database name.
-$host = 'localhost';
-$port = 8889;
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+$mysqlUsr = 'd2qpf22lyarz395l';
+$mysqlPass = 'pejiin9edn8xmt5a';
+$db = 'py6etou4vck57kfy';
+$host = 'xq7t6tasopo9xxbs.cbetxkdyhwsb.us-east-1.rds.amazonaws.com';
+$port = 3306;
 
 $link = mysqli_init();
 $conn = mysqli_real_connect(

@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 
-<?php include("connect.php"); ?>
+<?php 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+include("connect.php"); 
+?>
 
 <html>
     <head>
@@ -41,8 +46,8 @@
     
     $account = $_POST["account"];
 
-    echo $account . ' ';
-    var_dump(is_string($account));
+//    echo $account . ' ';
+//    var_dump(is_string($account));
     
     if (is_string($account)) {
         $id = mysqli_query($link, "SELECT id FROM `user` WHERE username = '$account'");

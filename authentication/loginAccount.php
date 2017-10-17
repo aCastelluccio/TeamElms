@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include("connect.php");
 include("cipher.php");
 
@@ -14,7 +18,7 @@ $sqlResult = mysqli_fetch_assoc($usrPassSQL);
 $usrPassword = $sqlResult['password'];
 
 if ($usrPassword === $loginPassword) {
-    header('Location: /CamilleTestFile.html');                  //Redirect to main website
+    header('Location: /Welcome_Page.php');                  //Redirect to main website
     exit();
 } else {
     echo 'Your username or password is incorrect.';

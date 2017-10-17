@@ -44,7 +44,7 @@ if (mysqli_query($link, $populateUsrTbl)) {
 $accountTableSQL = "INSERT INTO account (id) SELECT id FROM `user` WHERE NOT EXISTS (SELECT id FROM account WHERE `account`.id = `user`.id) LIMIT 1";
 
 if (mysqli_query($link, $accountTableSQL)) {
-    header('Location: accountLogin.html');
+    header('Location: tempHome.html');
     exit();
 } else {
     echo "Error: " . $accountTableSQL . "<br>" . mysqli_error($link);

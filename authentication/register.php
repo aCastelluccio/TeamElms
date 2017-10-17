@@ -27,7 +27,7 @@ require("vendor/phpauth/phpauth/Auth.php");
 include("vendor/phpauth/phpauth/Config.php");
 //include("connect.php");
 
-$dbh = new PDO("mysql:host=localhost;dbname=phpauth", "root", "root") or die("Can't connect to database");
+$dbh = new PDO("mysql:host=xq7t6tasopo9xxbs.cbetxkdyhwsb.us-east-1.rds.amazonaws.com;dbname=py6etou4vck57kfy", "d2qpf22lyarz395l", "pejiin9edn8xmt5a") or die("Can't connect to database");
 $config = new PHPAuth\Config($dbh);
 $auth = new PHPAuth\Auth($dbh, $config);
 
@@ -45,6 +45,7 @@ $passwordconform = filter_var($_POST["password_confirm"], FILTER_SANITIZE_STRING
 $params = array("FirstName" => "{$firstname}", "LastName" => "{$lastname}", "Username" => "{$username}");
 
 $result = $auth->register($email, $password, $passwordconform, $params = array(), $sendmail = TRUE);
+//My1Password2!haha@
 
 if ($result['error']) {
     echo $result['message'];

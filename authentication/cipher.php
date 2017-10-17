@@ -1,10 +1,9 @@
 <?php
 
-/*
-* Generate a secure hash for a given password. The cost is passed
-* to the blowfish algorithm. Check the PHP manual page for crypt to
-* find more information about this setting.
-*/
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 function generate_hash($password, $cost=11){
         /* To generate the salt, first generate enough random bytes. Because
          * base64 returns one character for each 6 bits, the we should generate
