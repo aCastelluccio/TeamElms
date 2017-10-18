@@ -18,41 +18,68 @@ if ($_POST["password"] !== $_POST["password_confirm"]){
 }
 $schoolKey = $_POST["schoolKey"];
 
+$error = "";
+$errorExists = false;
 
 //Checking if the user filled out all fields 
 if (!isset($firstname) || !isset($lastname) || !isset($username) || !isset($email) || !isset($password) || !isset($_POST["password_confirm"])|| !isset($schoolKey)) {
-    echo "Please fill out all the boxes. ";
+    $error .= "Please fill out all the boxes. ";
+    $errorExists = true;
 }
 
 //Checking if the username already exists
 if (mysqli_query($link, "SELECT username FROM `user` WHERE username = '$username'")) {
-    echo "Username appears to already be taken. ";
+    $error .= "Username appears to already be taken. ";
+    $errorExists = true;
 }
 
 //Validating email and making sure it does not already exist
 if ((!filter_var($email, FILTER_VALIDATE_EMAIL)) && (!mysqli_query($link, "SELECT email FROM `user` WHERE email = '$email'"))){
-    echo "Email is either not valid or already taken. ";
+    $error .= "Email is either not valid or already taken. ";
+    $errorExists = true;
 }
 
 if ($schoolKey !== 'acorn') {
-    echo "The school key you entered is not correct. Please enter the key given to you. ";
+    $error .= "The school key you entered is not correct. Please enter the key given to you. ";
+    $errorExists = true;
 }
 
 $populateUsrTbl = "INSERT INTO `user` (username, password, first_name, last_name, email) VALUES ('$username', '$password', '$firstname', '$lastname', '$email')";
 
-if (mysqli_query($link, $populateUsrTbl)) {
+if (!$bool) {
+    
+    if (mysqli_query($link, $populateUsrTbl)) {
+    } else {
+        echo "Error: " . $populateUsrTbl . "<br>" . mysqli_error($link);
+    }
+
+    $accountTableSQL = "INSERT INTO account (id) SELECT id FROM `user` WHERE NOT EXISTS (SELECT id FROM account WHERE `account`.id = `user`.id) LIMIT 1";
+
+    if (mysqli_query($link, $accountTableSQL)) {
+        header('Location: tempHome.html');
+        exit();
+    } else {
+        echo "Error: " . $accountTableSQL . "<br>" . mysqli_error($link);
+    }
+    
 } else {
-    echo "Error: " . $populateUsrTbl . "<br>" . mysqli_error($link);
+    echo $error;
+    $errorExists = false;
 }
 
-$accountTableSQL = "INSERT INTO account (id) SELECT id FROM `user` WHERE NOT EXISTS (SELECT id FROM account WHERE `account`.id = `user`.id) LIMIT 1";
-
-if (mysqli_query($link, $accountTableSQL)) {
-    header('Location: tempHome.html');
-    exit();
-} else {
-    echo "Error: " . $accountTableSQL . "<br>" . mysqli_error($link);
-}
+//if (mysqli_query($link, $populateUsrTbl)) {
+//} else {
+//    echo "Error: " . $populateUsrTbl . "<br>" . mysqli_error($link);
+//}
+//
+//$accountTableSQL = "INSERT INTO account (id) SELECT id FROM `user` WHERE NOT EXISTS (SELECT id FROM account WHERE `account`.id = `user`.id) LIMIT 1";
+//
+//if (mysqli_query($link, $accountTableSQL)) {
+//    header('Location: tempHome.html');
+//    exit();
+//} else {
+//    echo "Error: " . $accountTableSQL . "<br>" . mysqli_error($link);
+//}
 
 mysqli_close($link);
 
