@@ -26,7 +26,7 @@ if (!isset($firstname) || !isset($lastname) || !isset($username) || !isset($emai
     $error .= "Please fill out all the boxes. ";
     $errorExists = true;
 }
-
+var_dump(mysqli_query($link, "SELECT username FROM `user` WHERE username = '$username'"));
 //Checking if the username already exists
 if (mysqli_query($link, "SELECT username FROM `user` WHERE username = '$username'")) {
     $error .= "Username appears to already be taken. ";
