@@ -29,7 +29,7 @@ if (!isset($firstname) || !isset($lastname) || !isset($username) || !isset($emai
 $a = mysqli_query($link, "SELECT username FROM `user` WHERE username = '$username'");
 $b = $a['username'];
 //Checking if the username already exists
-if ($a === $username) {
+if ($b === $username) {
     $error .= "Username appears to already be taken. ";
     $errorExists = true;
 }
