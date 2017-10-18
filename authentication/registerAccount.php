@@ -17,11 +17,11 @@ if ($_POST["password"] !== $_POST["password_confirm"]){
     $password = $_POST["password"];
     //$password = generate_hash($temp, 11);
 }
-$schoolKey = $_['schoolKey'];
+$schoolKey = $_POST['schoolKey'];
 
 
 //Checking if the user filled out all fields 
-if (!isset($firstname) || !isset($lastname) || !isset($username) || !isset($email) || !isset($password) || !isset($_POST["password_confirm"]) || !isset($schoolKey)) {
+if (!isset($firstname) || !isset($lastname) || !isset($username) || !isset($email) || !isset($password) || !isset($_POST["password_confirm"])|| !isset($schoolKey)) {
     echo "Please fill out all the boxes. ";
 }
 
