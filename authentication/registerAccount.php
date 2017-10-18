@@ -46,7 +46,7 @@ if ($schoolKey !== 'acorn') {
 
 $populateUsrTbl = "INSERT INTO `user` (username, password, first_name, last_name, email) VALUES ('$username', '$password', '$firstname', '$lastname', '$email')";
 
-if (!$bool) {
+if (!$errorExists) {
     
     if (mysqli_query($link, $populateUsrTbl)) {
     } else {
