@@ -15,9 +15,8 @@ if ($_POST["password"] !== $_POST["password_confirm"]){
     echo "Passwords do not match. ";
 } else {
     $password = $_POST["password"];
-    //$password = generate_hash($temp, 11);
 }
-$schoolKey = $_POST['schoolKey'];
+$schoolKey = $_POST["schoolKey"];
 
 
 //Checking if the user filled out all fields 
@@ -27,12 +26,12 @@ if (!isset($firstname) || !isset($lastname) || !isset($username) || !isset($emai
 
 //Checking if the username already exists
 if (mysqli_query($link, "SELECT username FROM `user` WHERE username = '$username'")) {
-    echo = "Username appears to already be taken... ";
+    echo "Username appears to already be taken. ";
 }
 
 //Validating email and making sure it does not already exist
 if ((!filter_var($email, FILTER_VALIDATE_EMAIL)) && (!mysqli_query($link, "SELECT email FROM `user` WHERE email = '$email'"))){
-    echo = "Email is either not valid or already taken. ";
+    echo "Email is either not valid or already taken. ";
 }
 
 if ($schoolKey !== 'acorn') {
