@@ -26,7 +26,7 @@ if (!isset($firstname) || !isset($lastname) || !isset($username) || !isset($emai
     $error .= "Please fill out all the boxes. ";
     $errorExists = true;
 }
-$a = mysqli_query($link, "SELECT username FROM `user` WHERE username = '$username'");
+$a = mysqli_fetch_assoc(mysqli_query($link, "SELECT username FROM `user` WHERE username = '$username'"));
 $b = $a['username'];
 //Checking if the username already exists
 if ($b === $username) {
