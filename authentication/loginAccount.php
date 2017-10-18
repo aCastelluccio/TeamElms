@@ -5,7 +5,6 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 include("connect.php");
-include("cipher.php");
 
 $loginUsername = filter_var($_POST["username"], FILTER_SANITIZE_STRING);
 $loginPassword = filter_var($_POST["password"], FILTER_SANITIZE_STRING);
