@@ -68,20 +68,6 @@ if (!$errorExists) {
     $errorExists = false;
 }
 
-//if (mysqli_query($link, $populateUsrTbl)) {
-//} else {
-//    echo "Error: " . $populateUsrTbl . "<br>" . mysqli_error($link);
-//}
-//
-//$accountTableSQL = "INSERT INTO account (id) SELECT id FROM `user` WHERE NOT EXISTS (SELECT id FROM account WHERE `account`.id = `user`.id) LIMIT 1";
-//
-//if (mysqli_query($link, $accountTableSQL)) {
-//    header('Location: tempHome.html');
-//    exit();
-//} else {
-//    echo "Error: " . $accountTableSQL . "<br>" . mysqli_error($link);
-//}
-
 mysqli_close($link);
 
 ?>
