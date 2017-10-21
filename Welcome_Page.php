@@ -193,6 +193,7 @@ error_reporting(E_ALL);
       <div class="row">
         <div class="col-md-7">
           <a href="#">
+              <?php echo $row['images_path']; <?
             <img class="img-fluid rounded mb-3 mb-md-0" src="https://drive.google.com/uc?export=view&id=<?php echo $row['images_path'];?>" alt="">
           </a>
         </div>
