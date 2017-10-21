@@ -1,0 +1,9 @@
+<?php
+
+$file = new Google_Service_Drive_DriveFile();
+$result = $service->files->insert($file, array(
+  'data' => file_get_contents("path/to/file"),
+  'mimeType' => 'application/octet-stream',
+  'uploadType' => 'media'
+));
+?>

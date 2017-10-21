@@ -32,16 +32,19 @@ $auth = new PHPAuth\Auth($dbh, $config);
     </body>
     
     <?php
+    
     $key = $_POST["key"];
     $tempKey = $auth->getRandomKey(20);
     echo $tempKey;
-    $uid = $auth->getUID("kentharris5123@yahoo.com");
+    $uid = $auth->getUID("");
     $user = $auth->getUser($uid);
+              
     if(isset($_POST["submit"])) {
         $auth->activate($key);
         header('Location: accountLogin.html');
         exit();
     }
+              
     ?>
 
 </html>
