@@ -92,7 +92,8 @@
         </form>
 
     <?php
-          ini_set('display_errors', 1);
+          
+         ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
     include("mysqlconnect.php");
@@ -110,6 +111,7 @@ error_reporting(E_ALL);
                default: return false;
            }
          }
+
     if (!empty($_FILES["uploadedimage"]["name"])) {
         $file_name=$_FILES["uploadedimage"]["name"];
         $temp_name=$_FILES["uploadedimage"]["tmp_name"];
@@ -117,30 +119,63 @@ error_reporting(E_ALL);
         $ext= GetImageExtension($imgtype);
         $imagename=date("d-m-Y")."-".time().$ext;
         $target_path = "images/".$imagename; 
-        $marge_right = 10;
-        $marge_bottom = 10;
-        $stamp = imagecreatefrompng('acorn.png');
-
-        $sx = imagesx($stamp);
-        $sy = imagesy($stamp);
+//        $marge_right = 10;
+//        $marge_bottom = 10;
+//        $stamp = imagecreatefrompng('acorn.png');
+//
+//        $sx = imagesx($stamp);
+//        $sy = imagesy($stamp);
         if(move_uploaded_file($temp_name, $target_path)) {   
-            $query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$target_path."','".date("Y-m-d")."')";
-            mysqli_query($link, $query_upload) or die("error in $query_upload == ----> ".mysqli_error());
-            $im = imagecreatefromjpeg($target_path);
-            echo "images/".$target_path;
-            if(!$im){
-                $im = imagecreatefrompng($target_path);
-            }
-            imagecopy($im, $stamp, imagesx($im) - $sx - $marge_right, imagesy($im) - $sy - $marge_bottom, 0, 0, imagesx($stamp), imagesy($stamp));
-            imagejpeg($im, $target_path);
+//            $query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$target_path."','".date("Y-m-d")."')";
+//            mysqli_query($link, $query_upload) or die("error in $query_upload == ----> ".mysqli_error());
+//            if $imagetype ==""
+//            $im = imagecreatefromjpeg($target_path);
+//            if(!$im){
+//                $im = imagecreatefrompng($target_path);
+//            }
+//            imagecopy($im, $stamp, imagesx($im) - $sx - $marge_right, imagesy($im) - $sy - $marge_bottom, 0, 0, imagesx($stamp), imagesy($stamp));
+//            imagejpeg($im, $target_path);
 
         } else {
             exit("Error While uploading image on the server");
         }
+        require_once __DIR__.'/vendor/autoload.php';
+
+        session_start();
+        
+        $client = new Google_Client();
+        $client->setAuthConfig('client_secrets.json');
+        $client->addScope(Google_Service_Drive::DRIVE);
+
+        if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+          $client->setAccessToken($_SESSION['access_token']);
+          $drive = new Google_Service_Drive($client);
+            $folderId = '0B0Uz_T5t_1jOaWMyNmh5UURaaDQ';
+        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+            'name' => $target_path,
+            'parents' => array($folderId)
+        ));
+
+        $content = file_get_contents($target_path);
+        $file = $drive->files->create($fileMetadata, array(
+            'data' => $content,
+            'mimeType' => 'image/jpeg',
+            'uploadType' => 'multipart',
+            'fields' => 'id'));
+        //printf("File ID: %s\n", $file->id);
+        
+            $query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$file->id."','".date("Y-m-d")."')";
+            mysqli_query($link, $query_upload) or die("error in $query_upload == ----> ".mysqli_error());
+        } else {
+          $redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/oauth2callback.php';
+          header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
+          }
     }
     //echo '<meta http-equiv="refresh" content="0; URL=retrieve.php" />';
     ?>     
-          
+   
+
+
     <!-- Space -->
     <pre class="tab"> </pre>
    
@@ -158,7 +193,7 @@ error_reporting(E_ALL);
       <div class="row">
         <div class="col-md-7">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="<?php echo $row['images_path'];?>" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="https://drive.google.com/uc?export=view&id=<?php echo $row['images_path'];?>" alt="">
           </a>
         </div>
         <div class="col-md-5">
