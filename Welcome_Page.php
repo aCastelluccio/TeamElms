@@ -3,7 +3,7 @@
 //TO-DO: if not logged in, then redirect to login.html
 session_start(); 
 if ($_SESSION['logged_in'] == 0) {
-    header('Location: ./elms/authentication/tempHome.html');
+    header('Location: ./authentication/tempHome.html');
     exit();
 }
 ?>
