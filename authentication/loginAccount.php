@@ -9,6 +9,15 @@ include("connect.php");
 $loginUsername = filter_var($_POST["username"], FILTER_SANITIZE_STRING);
 $loginPassword = filter_var($_POST["password"], FILTER_SANITIZE_STRING);
 
+//This is to make sure that a user cannot simply go to the home page without being logged in.
+if (isset($loginUsername) && isset($loginPassword)) {
+    $_SESSION['logged_in'] = 1;
+    //For the the temporary logout format.
+    $_SESSION['user_username'] = $loginUsername;
+} else {
+    $_SESSION['logged_in'] = 0;
+}
+
 if ($conn) {
     $usrPassSQL = mysqli_query($link, "SELECT password FROM `user` WHERE username = '$loginUsername'");
 }
