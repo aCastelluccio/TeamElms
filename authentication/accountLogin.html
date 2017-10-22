@@ -1,17 +1,55 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta name="accountLogin">
-        <meta charset="utf-8">
-        <title>Account Login</title>
-    </head>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="login">
+    <link rel="icon" href="../../favicon.ico">
 
-    <body>
-        <form action="loginAccount.php" method="post">
-            Username: <input type="text" name="username"><br>
-            Password: <input type="password" name="password"><br>
-            <button name="loginButton" type="submit">Login</button>
-        </form>
-    </body>
+    <title>Signin</title>
 
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet">
+
+  </head>
+
+  <body class="body">
+
+    <div class="container">
+
+      <form class="form-signin" action="login.php" method="post">
+        <h2 class="form-signin-heading">Welcome, Parent</h2>
+          
+        <label for="email" class="sr-only">Email</label>
+        <input type="email" id="email" name ="email" class="form-control" placeholder="Email address" required autofocus>
+          
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+
+        <div class="checkbox">
+            
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+            
+        </div>
+          
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="signinButton">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" onclick="location.href='accountRegistration.html'">Register</button>
+          
+      </form>
+
+    </div>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+    
 </html>
