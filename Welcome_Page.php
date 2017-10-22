@@ -179,7 +179,6 @@ error_reporting(E_ALL);
         }
         require_once __DIR__.'/vendor/autoload.php';
 
-        session_start();
                 $client = getClient();
 
 //        $client = new Google_Client();
