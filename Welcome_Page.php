@@ -10,7 +10,7 @@ if ($_SESSION['logged_in'] == 0) {
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Welcome Page</title>
+  <title>Home Page</title>
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
