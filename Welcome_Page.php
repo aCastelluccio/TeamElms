@@ -99,8 +99,38 @@ if ($_SESSION['logged_in'] == 0) {
 
         </form>
 
-    <?php
+    <?php        
           
+ function getClient(){
+    $client = new Google_Client();
+   // $client->setApplicationName(APPNAME);       // app name
+    $client->setClientId('1060065924858-b94sofn2u34i30j887hq5udsb1sd4tbr.apps.googleusercontent.com');             // client id
+    $client->setClientSecret('K6NBjcFIfzEkVuQRNnYGuXuq');     // client secret 
+    //$client->setRedirectUri(REDIRECT_URI);      // redirect uri
+    $client->setApprovalPrompt('auto');
+
+    $client->setAccessType('offline');         // generates refresh token
+
+    //$token = '$_COOKIE['ACCESSTOKEN']';          // fetch from cookie
+
+    // if token is present in cookie
+//    if($token){
+//        // use the same token
+//        $client->setAccessToken($token);
+//    }
+
+    // this line gets the new token if the cookie token was not present
+    // otherwise, the same cookie token
+    $client->getAccessToken('ya29.GlvsBF_2sD_Bn9ioOzePSiOgEJC2NiLZ2HbG1LTclPAv3h7sGDWsjlTgJ8vaVdgSuf2_wvLz88Lj7CC6Y9oWkEpAbQEzdqmZwdoM_XXO9QOkb67giNzgMVoqeKIq');
+//    if($client->isAccessTokenExpired()){  // if token expired
+//        $refreshToken = json_decode($token)->refresh_token;
+//
+//        // refresh the token
+        $client->refreshToken('1/mZ9Ja7eNiQFrCJbETDKuYCiiPo2qppWYABYi5oTPXv0');
+//    }
+
+    return $client;
+}
          ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -150,20 +180,21 @@ error_reporting(E_ALL);
         require_once __DIR__.'/vendor/autoload.php';
 
         session_start();
-        
-        $client = new Google_Client();
-        $client->setAuthConfig('client_secrets.json');
-        $client->addScope(Google_Service_Drive::DRIVE);
+                $client = getClient();
 
-        if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
-          $client->setAccessToken($_SESSION['access_token']);
+//        $client = new Google_Client();
+//        $client->setAuthConfig('client_secrets.json');
+       $client->addScope(Google_Service_Drive::DRIVE);
+//
+////        if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+//          $client->setAccessToken($_SESSION['access_token']);
           $drive = new Google_Service_Drive($client);
             $folderId = '0B0Uz_T5t_1jOaWMyNmh5UURaaDQ';
         $fileMetadata = new Google_Service_Drive_DriveFile(array(
             'name' => $target_path,
             'parents' => array($folderId)
         ));
-
+//
         $content = file_get_contents($target_path);
         $file = $drive->files->create($fileMetadata, array(
             'data' => $content,
@@ -171,14 +202,24 @@ error_reporting(E_ALL);
             'uploadType' => 'multipart',
             'fields' => 'id'));
         //printf("File ID: %s\n", $file->id);
+//        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+//        'name' => 'acorn.png'));
+//    $content = file_get_contents('acorn.png');
+//    $file = $drive->files->create($fileMetadata, array(
+//        'data' => $content,
+//        'mimeType' => 'image/jpeg',
+//        'uploadType' => 'multipart',
+//        'fields' => 'id'));
+//    printf("File ID: %s\n", $file->id);
         
             $query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$file->id."','".date("Y-m-d")."')";
             mysqli_query($link, $query_upload) or die("error in $query_upload == ----> ".mysqli_error());
-        } else {
-          $redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/oauth2callback.php';
-          header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
-          }
+//        //} else {
+//          $redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/oauth2callback.php';
+//          header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
+//         // }
     }
+          
     //echo '<meta http-equiv="refresh" content="0; URL=retrieve.php" />';
     ?>     
    
@@ -201,7 +242,6 @@ error_reporting(E_ALL);
       <div class="row">
         <div class="col-md-7">
           <a href="#">
-            
             <img class="img-fluid rounded mb-3 mb-md-0" src="https://drive.google.com/uc?export=view&id=<?php echo $row['images_path'];?>" alt="">
           </a>
         </div>
