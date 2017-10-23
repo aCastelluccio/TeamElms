@@ -3,14 +3,14 @@
 //TO-DO: if not logged in, then redirect to login.html
 session_start(); 
 if ($_SESSION['logged_in'] == 0) {
-    header('Location: ./elms/authentication/tempHome.html');
+    header('Location: ./authentication/tempHome.html');
     exit();
 }
 ?>
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Welcome Page</title>
+  <title>Home Page</title>
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
@@ -179,7 +179,6 @@ error_reporting(E_ALL);
         }
         require_once __DIR__.'/vendor/autoload.php';
 
-        session_start();
                 $client = getClient();
 
 //        $client = new Google_Client();
