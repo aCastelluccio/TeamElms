@@ -232,7 +232,7 @@ error_reporting(E_ALL);
       <!-- Project One -->
     <?php 
           include("mysqlconnect.php");
-          $query= "SELECT images_path FROM images_tbl";
+          $query= "SELECT images_path FROM images_tbl ORDER BY images_id DESC";          
           $result= mysqli_query($link, $query) or die("error in $query == ----> ".mysqli_error()); 
           while($row = mysqli_fetch_array($result)){
           ?>
