@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <?php 
-//TO-DO: if not logged in, then redirect to login.html
+//TO-DO: if not logged in, then redirect to index.html
 session_start(); 
-if ($_SESSION['logged_in'] == 0) {
-    header('Location: ./authentication/tempHome.html');
+if ($_SESSION['active_session'] == 0) {
+    header('Location: /index.html');
     exit();
 }
 ?>
