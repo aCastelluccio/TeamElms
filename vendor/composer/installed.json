@@ -693,7 +693,7 @@
         "keywords": [
             "google"
         ]
-    }
+    },
     {
         "name": "bjeavons/zxcvbn-php",
         "version": "0.3.0",
