@@ -6,6 +6,13 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 include("authconnect.php");
+
+//Function -- Uncomment below code to purge all phpauth-related tables on the live site.
+$dbh->exec("DELETE FROM attempts;");
+$dbh->exec("DELETE FROM config;");
+$dbh->exec("DELETE FROM requests;");
+$dbh->exec("DELETE FROM sessions;");
+$dbh->exec("DELETE FROM users;");
     
 $email = filter_var($_POST["email"], FILTER_SANITIZE_STRING);
 $password = filter_var($_POST["password"], FILTER_SANITIZE_STRING);
