@@ -3,7 +3,7 @@
 //TO-DO: if not logged in, then redirect to index.html
 session_start(); 
 if ($_SESSION['active_session'] == 0) {
-    header('Location: /index.html');
+    header('Location: ./account/index.html');
     exit();
 }
 ?>
