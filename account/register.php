@@ -5,8 +5,8 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require("../vendor/ZxcvbnPhp/Matchers/MatchInterface.php");
-require(".//vendor/ZxcvbnPhp/Matchers/Match.php");
-require("./vendor/ZxcvbnPhp/Matchers/DigitMatch.php");
+require("../vendor/ZxcvbnPhp/Matchers/Match.php");
+require("../vendor/ZxcvbnPhp/Matchers/DigitMatch.php");
 require("../vendor/ZxcvbnPhp/Matchers/Bruteforce.php");
 require("../vendor/ZxcvbnPhp/Matchers/YearMatch.php");
 require("../vendor/ZxcvbnPhp/Matchers/SpatialMatch.php");
