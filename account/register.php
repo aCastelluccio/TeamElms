@@ -4,22 +4,22 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require("./vendor/ZxcvbnPhp/Matchers/MatchInterface.php");
-require("./vendor/ZxcvbnPhp/Matchers/Match.php");
+require("../vendor/ZxcvbnPhp/Matchers/MatchInterface.php");
+require(".//vendor/ZxcvbnPhp/Matchers/Match.php");
 require("./vendor/ZxcvbnPhp/Matchers/DigitMatch.php");
-require("./vendor/ZxcvbnPhp/Matchers/Bruteforce.php");
-require("./vendor/ZxcvbnPhp/Matchers/YearMatch.php");
-require("./vendor/ZxcvbnPhp/Matchers/SpatialMatch.php");
-require("./vendor/ZxcvbnPhp/Matchers/SequenceMatch.php");
-require("./vendor/ZxcvbnPhp/Matchers/RepeatMatch.php");
-require("./vendor/ZxcvbnPhp/Matchers/DictionaryMatch.php");
-require("./vendor/ZxcvbnPhp/Matchers/L33tMatch.php");
-require("./vendor/ZxcvbnPhp/Matchers/DateMatch.php");
-require("./vendor/ZxcvbnPhp/Matcher.php");
-require("./vendor/ZxcvbnPhp/Searcher.php");
-require("./vendor/ZxcvbnPhp/ScorerInterface.php");
-require("./vendor/ZxcvbnPhp/Scorer.php");
-require("./vendor/ZxcvbnPhp/Zxcvbn.php");
+require("../vendor/ZxcvbnPhp/Matchers/Bruteforce.php");
+require("../vendor/ZxcvbnPhp/Matchers/YearMatch.php");
+require("../vendor/ZxcvbnPhp/Matchers/SpatialMatch.php");
+require("../vendor/ZxcvbnPhp/Matchers/SequenceMatch.php");
+require("../vendor/ZxcvbnPhp/Matchers/RepeatMatch.php");
+require("../vendor/ZxcvbnPhp/Matchers/DictionaryMatch.php");
+require("../vendor/ZxcvbnPhp/Matchers/L33tMatch.php");
+require("../vendor/ZxcvbnPhp/Matchers/DateMatch.php");
+require("../vendor/ZxcvbnPhp/Matcher.php");
+require("../vendor/ZxcvbnPhp/Searcher.php");
+require("../vendor/ZxcvbnPhp/ScorerInterface.php");
+require("../vendor/ZxcvbnPhp/Scorer.php");
+require("../vendor/ZxcvbnPhp/Zxcvbn.php");
 
 use ZxcvbnPhp\Zxcvbn;
 
