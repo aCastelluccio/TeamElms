@@ -2,6 +2,7 @@
     "require": {
         "bjeavons/zxcvbn-php": "^0.3",
         "phpmailer/phpmailer": "v5.2.9",
-        "phpauth/phpauth": "^1.1"
+        "phpauth/phpauth": "^1.1",
+        "google/apiclient": "^2.0"
     }
 }

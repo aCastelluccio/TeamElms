@@ -13,8 +13,8 @@ $hash = $dbh->query("SELECT hash FROM sessions WHERE uid = (SELECT id FROM users
 $logout = $auth->logout($hash);
     
 if ($logout) {
-    $_SESSION['active_session'] = 0;
-    header('Location: index.html');
+    $_SESSION['active_session'] = false;
+    header('Location: ./');
     exit();
 } else {
     echo "You were unable to successfully logout. Confirm whether you were recently logged in; if you were not, then you cannot logout.";

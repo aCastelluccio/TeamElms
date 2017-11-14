@@ -18,11 +18,16 @@ class ComposerStaticInite67722534944f4faf3521a19524b9f20
         array (
             'phpseclib\\' => 10,
         ),
+        'Z' => 
+        array (
+            'ZxcvbnPhp\\' => 10,
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Cache\\' => 10,
+            'PHPAuth\\' => 8,
         ),
         'M' => 
         array (
@@ -39,20 +44,16 @@ class ComposerStaticInite67722534944f4faf3521a19524b9f20
         array (
             'Firebase\\JWT\\' => 13,
         ),
-        'Z' => 
-        array (
-            'ZxcvbnPhp\\' => 10,
-        ),
-        'P' => 
-        array (
-            'PHPAuth\\' => 8,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'phpseclib\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+        ),
+        'ZxcvbnPhp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bjeavons/zxcvbn-php/src',
         ),
         'Psr\\Log\\' => 
         array (
@@ -65,6 +66,10 @@ class ComposerStaticInite67722534944f4faf3521a19524b9f20
         'Psr\\Cache\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/cache/src',
+        ),
+        'PHPAuth\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpauth/phpauth',
         ),
         'Monolog\\' => 
         array (
@@ -90,14 +95,6 @@ class ComposerStaticInite67722534944f4faf3521a19524b9f20
         array (
             0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
-        'ZxcvbnPhp\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/bjeavons/zxcvbn-php/src',
-        ),
-        'PHPAuth\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/phpauth/phpauth',
-        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -112,43 +109,9 @@ class ComposerStaticInite67722534944f4faf3521a19524b9f20
                 0 => __DIR__ . '/..' . '/google/apiclient/src',
             ),
         ),
-        'Z' => 
-        array (
-            'ZxcvbnPhp' => 
-            array (
-                0 => __DIR__ . '/../..' . '/elms/authentication/vendor/bjeavons/zxcvbn-php/src',
-            ),
-        ),
-        'P' => 
-        array (
-            'PHPMailer' => 
-            array (
-                0 => __DIR__ . '/../..' . '/elms/authentication/vendor/phpmailer/phpmailer/class.phpmailer.php',
-            ),
-        ),
     );
 
     public static $classMap = array (
-        'Google\\Auth\\ApplicationDefaultCredentials' => __DIR__ . '/..' . '/google/auth/src/ApplicationDefaultCredentials.php',
-        'Google\\Auth\\CacheTrait' => __DIR__ . '/..' . '/google/auth/src/CacheTrait.php',
-        'Google\\Auth\\CredentialsLoader' => __DIR__ . '/..' . '/google/auth/src/CredentialsLoader.php',
-        'Google\\Auth\\Credentials\\AppIdentityCredentials' => __DIR__ . '/..' . '/google/auth/src/Credentials/AppIdentityCredentials.php',
-        'Google\\Auth\\Credentials\\GCECredentials' => __DIR__ . '/..' . '/google/auth/src/Credentials/GCECredentials.php',
-        'Google\\Auth\\Credentials\\IAMCredentials' => __DIR__ . '/..' . '/google/auth/src/Credentials/IAMCredentials.php',
-        'Google\\Auth\\Credentials\\ServiceAccountCredentials' => __DIR__ . '/..' . '/google/auth/src/Credentials/ServiceAccountCredentials.php',
-        'Google\\Auth\\Credentials\\ServiceAccountJwtAccessCredentials' => __DIR__ . '/..' . '/google/auth/src/Credentials/ServiceAccountJwtAccessCredentials.php',
-        'Google\\Auth\\Credentials\\UserRefreshCredentials' => __DIR__ . '/..' . '/google/auth/src/Credentials/UserRefreshCredentials.php',
-        'Google\\Auth\\FetchAuthTokenInterface' => __DIR__ . '/..' . '/google/auth/src/FetchAuthTokenInterface.php',
-        'Google\\Auth\\HttpHandler\\Guzzle5HttpHandler' => __DIR__ . '/..' . '/google/auth/src/HttpHandler/Guzzle5HttpHandler.php',
-        'Google\\Auth\\HttpHandler\\Guzzle6HttpHandler' => __DIR__ . '/..' . '/google/auth/src/HttpHandler/Guzzle6HttpHandler.php',
-        'Google\\Auth\\HttpHandler\\HttpHandlerFactory' => __DIR__ . '/..' . '/google/auth/src/HttpHandler/HttpHandlerFactory.php',
-        'Google\\Auth\\Middleware\\AuthTokenMiddleware' => __DIR__ . '/..' . '/google/auth/src/Middleware/AuthTokenMiddleware.php',
-        'Google\\Auth\\Middleware\\ScopedAccessTokenMiddleware' => __DIR__ . '/..' . '/google/auth/src/Middleware/ScopedAccessTokenMiddleware.php',
-        'Google\\Auth\\Middleware\\SimpleMiddleware' => __DIR__ . '/..' . '/google/auth/src/Middleware/SimpleMiddleware.php',
-        'Google\\Auth\\OAuth2' => __DIR__ . '/..' . '/google/auth/src/OAuth2.php',
-        'Google\\Auth\\Subscriber\\AuthTokenSubscriber' => __DIR__ . '/..' . '/google/auth/src/Subscriber/AuthTokenSubscriber.php',
-        'Google\\Auth\\Subscriber\\ScopedAccessTokenSubscriber' => __DIR__ . '/..' . '/google/auth/src/Subscriber/ScopedAccessTokenSubscriber.php',
-        'Google\\Auth\\Subscriber\\SimpleSubscriber' => __DIR__ . '/..' . '/google/auth/src/Subscriber/SimpleSubscriber.php',
         'Google_Service_Exception' => __DIR__ . '/..' . '/google/apiclient/src/Google/Service/Exception.php',
         'Google_Service_Resource' => __DIR__ . '/..' . '/google/apiclient/src/Google/Service/Resource.php',
         'PHPMailer' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmailer.php',

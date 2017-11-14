@@ -43,7 +43,8 @@ if (($now <= $_SESSION['session_expirationdate']) || (!$auth->checkSession($hash
 if (!$auth->isLogged()) {
     if ($login['error'] === false) {
         setcookie($config->cookie_name, $login['hash'], $login['expire'], $config->cookie_path, $config->cookie_domain, $config->cookie_secure, $config->cookie_http);
-        header("Location: /");
+        header('Location: ../home/?login=false');
+        header("Location: ../home/");
         exit();
     } else {
         echo $login['message'];

@@ -37,7 +37,7 @@ include("activateInput(testing)"); //For testing purposes
 
     if( $enteredKey === $key ) {
         $auth->activate($enteredKey);
-        header('Location: login.php');
+        header('Location: /');
         exit();
     }
               

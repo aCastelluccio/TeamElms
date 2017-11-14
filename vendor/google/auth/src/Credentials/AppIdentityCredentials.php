@@ -51,8 +51,6 @@ use Google\Auth\CredentialsLoader;
  */
 class AppIdentityCredentials extends CredentialsLoader
 {
-    const cacheKey = 'GOOGLE_AUTH_PHP_APPIDENTITY';
-
     /**
      * Result of fetchAuthToken.
      *
@@ -71,15 +69,25 @@ class AppIdentityCredentials extends CredentialsLoader
     }
 
     /**
-     * Determines if this an App Engine instance, by accessing the SERVER_SOFTWARE
-     * environment variable.
+     * Determines if this an App Engine instance, by accessing the
+     * SERVER_SOFTWARE environment variable (prod) or the APPENGINE_RUNTIME
+     * environment variable (dev).
      *
      * @return true if this an App Engine Instance, false otherwise
      */
     public static function onAppEngine()
     {
-        return isset($_SERVER['SERVER_SOFTWARE']) &&
-        strpos($_SERVER['SERVER_SOFTWARE'], 'Google App Engine') !== false;
+        $appEngineProduction = isset($_SERVER['SERVER_SOFTWARE']) &&
+            0 === strpos($_SERVER['SERVER_SOFTWARE'], 'Google App Engine');
+        if ($appEngineProduction) {
+            return true;
+        }
+        $appEngineDevAppServer = isset($_SERVER['APPENGINE_RUNTIME']) &&
+            $_SERVER['APPENGINE_RUNTIME'] == 'php';
+        if ($appEngineDevAppServer) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -139,10 +147,13 @@ class AppIdentityCredentials extends CredentialsLoader
     }
 
     /**
+     * Caching is handled by the underlying AppIdentityService, return empty string
+     * to prevent caching.
+     *
      * @return string
      */
     public function getCacheKey()
     {
-        return self::cacheKey;
+        return '';
     }
 }
