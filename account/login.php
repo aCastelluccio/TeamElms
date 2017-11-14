@@ -20,38 +20,29 @@ if ($checkbox === "YES") {
 
 $login = $auth->login($email, $password, $remember);
 
-$_SESSION['session_expirationdate'] = $dbh->query("SELECT expiredate FROM sessions WHERE uid = (SELECT id FROM users WHERE email = '$email');", PDO::FETCH_ASSOC)->fetch()['expiredate'];
-$hash = $dbh->query("SELECT hash FROM sessions WHERE uid = (SELECT id FROM users WHERE email = '$email');", PDO::FETCH_ASSOC)->fetch()['hash'];
-
-$now = new DateTime();
-$now->format('Y-m-d H:i:s');    // MySQL datetime format
-$now->getTimestamp(); 
-
-//TO-DO: Make this more clear and improve code
-//Making sure that the to-be newly instantiated session meets a couple of conditions first: 
-//1 - the current timestamp when logging-in isn't before the previous session's expiration or
-//2 - there isn't already an active session for the user
-if (($now <= $_SESSION['session_expirationdate']) || (!$auth->checkSession($hash))) {
-    $_SESSION['active_session'] = false;
-} else {
-    $_SESSION['active_session'] = true;
-    //For the the logout method in temporary use.
-    $_SESSION['user_email'] = $email;
-}
-
 //Login
 if (!$auth->isLogged()) {
-    if ($login['error'] === false) {
+    
+    if (!$login['error']) {
+        
+        $_SESSION['active_session'] = true;
+        $_SESSION['user_email'] = $email;
+        
         setcookie($config->cookie_name, $login['hash'], $login['expire'], $config->cookie_path, $config->cookie_domain, $config->cookie_secure, $config->cookie_http);
-        header('Location: ../home/?login=false');
         header("Location: ../home/");
         exit();
+        
     } else {
+        
+        $_SESSION['active_session'] = false;
         echo $login['message'];
+        
     }
 } else {
+    
     header('HTTP/1.0 403 Forbidden');
     exit();
+    
 }
     
 ?>
