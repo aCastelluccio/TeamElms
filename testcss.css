@@ -1,0 +1,206 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+.header-login-signup{
+	background: #159957;  /* fallback for old browsers */
+	margin-top: 0px;
+	box-shadow:0 1px 1px #ccc;
+	padding: 30px 0px 0px 160px;
+	height: 100px;
+	color: #ffffff;
+	box-sizing: border-box;
+	
+}
+
+.header-login-signup .header-limiter {
+	max-width: 1200px;
+	text-align: center;
+	margin: 0;
+}
+
+/* Logo */
+
+.header-login-signup .header-limiter h1{
+
+	float: left;
+	font: normal 55px Cookie, Arial, Helvetica, sans-serif;
+	line-height: 40px;
+	margin: 0;
+}
+
+.header-login-signup .header-limiter h1 span {
+	color: brown;
+}
+
+/* The navigation links */
+
+.header-login-signup .header-limiter a {
+	color: black;
+	text-decoration: none;
+}
+
+/* Login/Sign up buttons */
+
+.header-login-signup .header-limiter ul {
+	font: 20px Arial, Helvetica, sans-serif;
+	list-style: none;
+	line-height: 1;
+	float: right;
+	
+}
+
+.header-login-signup .header-limiter ul li {
+	display: inline-block;
+	margin-left: 15px;
+	opacity:0.9;
+}
+
+.header-login-signup .header-limiter ul li:hover{
+	opacity: 1;
+}
+
+/* The sign up button */
+
+.header-login-signup .header-limiter ul li:last-child a {
+	font-weight: bold;
+	background-color: gray;
+	padding: 10px 15px;
+	border-radius: 3px;
+}
+
+/* Making the header responsive */
+
+@media all and (max-width: 600px) {
+
+	.header-login-signup {
+		padding: 25px;
+		height: 100px;
+	}
+
+	.header-login-signup .header-limiter h1 {
+		float: none;
+		margin: -8px 0 2px;
+		text-align: center;
+		font-size: 24px;
+		line-height: 1;
+	}
+
+
+	.header-login-signup .header-limiter ul {
+		display: none;
+	}
+
+}
+.nav{
+	font-family: 'Trebuchet MS', Helvetica, sans-serif;
+	position:absolute;
+	padding-left:5px;
+    left:0; top:100px; bottom: 0;
+    width: 150px;
+	background: #159957;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to top, #155799, #159957);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to top, #155799, #159957); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+.nav h2{
+	padding-left:8px;
+}
+.nav ul{
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 149px;
+ 
+}
+.nav li a{
+	display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+.nav li a:hover {
+    background-color: #555;
+    color: white;
+}
+.main{
+	position: absolute;
+    left:178px; top:100px; right:0; bottom:0;
+	padding-right:30px;
+}
+
+/* Bordered form */
+form {
+    border: 3px solid #f1f1f1;
+}
+
+/* Full-width inputs */
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Add a hover effect for buttons */
+button:hover {
+    opacity: 0.8;
+}
+
+/* Extra style for the cancel button (red) */
+.cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+}
+
+/* Center the avatar image inside this container */
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+
+/* Avatar image */
+img.avatar {
+    width: 40%;
+    border-radius: 50%;
+}
+
+/* Add padding to containers */
+.container {
+    padding: 16px;
+}
+
+/* The "Forgot password" text */
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+        display: block;
+        float: none;
+    }
+    .cancelbtn {
+        width: 100%;
+    }
+} 
+
+

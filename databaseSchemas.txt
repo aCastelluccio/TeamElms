@@ -1,0 +1,19 @@
+//Kent’s current database schemas
+CREATE TABLE user (
+	id smallint(6) NOT NULL AUTO_INCREMENT,
+	username varchar(40) NOT NULL,
+	password varchar(50) NOT NULL,
+	first_name varchar(100) NOT NULL,
+	last_name varchar(100) NOT NULL,
+	email varchar(100) DEFAULT NULL,
+	dayRegistered datetime DEFAULT CURRENT_TIMESTAMP
+	UNIQUE (id)
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE account (
+	id smallint(6) NOT NULL,
+	isActive tinyint(1) NOT NULL DEFAULT 0,
+	accPrivileges tinyint(3) DEFAULT NULL,
+	PRIMARY KEY (id)
+);

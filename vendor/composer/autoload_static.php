@@ -39,14 +39,6 @@ class ComposerStaticInite67722534944f4faf3521a19524b9f20
         array (
             'Firebase\\JWT\\' => 13,
         ),
-        'Z' => 
-        array (
-            'ZxcvbnPhp\\' => 10,
-        ),
-        'P' => 
-        array (
-            'PHPAuth\\' => 8,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -90,14 +82,6 @@ class ComposerStaticInite67722534944f4faf3521a19524b9f20
         array (
             0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
-        'ZxcvbnPhp\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/bjeavons/zxcvbn-php/src',
-        ),
-        'PHPAuth\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/phpauth/phpauth',
-        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -110,20 +94,6 @@ class ComposerStaticInite67722534944f4faf3521a19524b9f20
             'Google_' => 
             array (
                 0 => __DIR__ . '/..' . '/google/apiclient/src',
-            ),
-        ),
-        'Z' => 
-        array (
-            'ZxcvbnPhp' => 
-            array (
-                0 => __DIR__ . '/../..' . '/elms/authentication/vendor/bjeavons/zxcvbn-php/src',
-            ),
-        ),
-        'P' => 
-        array (
-            'PHPMailer' => 
-            array (
-                0 => __DIR__ . '/../..' . '/elms/authentication/vendor/phpmailer/phpmailer/class.phpmailer.php',
             ),
         ),
     );
@@ -151,10 +121,6 @@ class ComposerStaticInite67722534944f4faf3521a19524b9f20
         'Google\\Auth\\Subscriber\\SimpleSubscriber' => __DIR__ . '/..' . '/google/auth/src/Subscriber/SimpleSubscriber.php',
         'Google_Service_Exception' => __DIR__ . '/..' . '/google/apiclient/src/Google/Service/Exception.php',
         'Google_Service_Resource' => __DIR__ . '/..' . '/google/apiclient/src/Google/Service/Resource.php',
-        'PHPMailer' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmailer.php',
-        'POP3' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.pop3.php',
-        'SMTP' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.smtp.php',
-        'phpmailerException' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmailer.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
