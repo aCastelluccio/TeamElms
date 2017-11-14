@@ -39,7 +39,7 @@ $params = array("FirstName" => "{$firstname}", "LastName" => "{$lastname}");
 
 $schoolKey = $_POST['schoolKey'];
 
-$register = $auth->register($email, $password, $passwordconform, $params = array(), $sendmail = TRUE); //$captcha = "aD1pZ7"
+$register = $auth->register($email, $password, $passwordconform); //$captcha = "aD1pZ7"
 //Test Password: My1Password2!haha@
 
 if ($schoolKey === 'acorn') {
