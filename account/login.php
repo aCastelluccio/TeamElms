@@ -19,29 +19,28 @@ if ($checkbox === "YES") {
 }
 
 $login = $auth->login($email, $password, $remember);
+$_SESSION['active_session'] = false;
 
 //Login
-if (!$auth->isLogged()) {
+if ((!$auth->isLogged()) && (!$login['error'])) {
+        
+    $_SESSION['active_session'] = true;
+    $_SESSION['email'] = $email;
     
-    if (!$login['error']) {
-        
-        $_SESSION['active_session'] = true;
-        $_SESSION['user_email'] = $email;
-        
-        setcookie($config->cookie_name, $login['hash'], $login['expire'], $config->cookie_path, $config->cookie_domain, $config->cookie_secure, $config->cookie_http);
-        header("Location: ../home/");
-        exit();
-        
+    if ($email === 'admin@drew.edu') {
+        $_SESSION['admin'] = true;
     } else {
-        
-        $_SESSION['active_session'] = false;
-        echo $login['message'];
-        
+        $_SESSION['admin'] = false;
     }
+        
+    setcookie($config->cookie_name, $login['hash'], $login['expire'], $config->cookie_path, $config->cookie_domain, $config->cookie_secure, $config->cookie_http);
+        
+    header("Location: ../home/");
+    exit();
+    
 } else {
     
-    header('HTTP/1.0 403 Forbidden');
-    exit();
+    echo $login['message'];
     
 }
     

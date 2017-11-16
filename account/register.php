@@ -25,27 +25,27 @@ use ZxcvbnPhp\Zxcvbn;
 
 include("authconnect.php");
 
-$firstname = filter_var($_POST["first_name"], FILTER_SANITIZE_STRING);
-$lastname = filter_var($_POST["last_name"], FILTER_SANITIZE_STRING);
+//For testing:  My#Password1!2@345
+
+$first_name = ucfirst(filter_var($_POST["first_name"], FILTER_SANITIZE_STRING));
+$last_name = ucfirst(filter_var($_POST["last_name"], FILTER_SANITIZE_STRING));
 $email = filter_var($_POST["email"], FILTER_SANITIZE_STRING);
 $password = filter_var($_POST["password"], FILTER_SANITIZE_STRING);
 $passwordconform = filter_var($_POST["password_confirm"], FILTER_SANITIZE_STRING);
-$params = array("FirstName" => "{$firstname}", "LastName" => "{$lastname}");
+$params = array("first_name" => "{$first_name}", "last_name" => "{$last_name}");
 
-$schoolKey = $_POST['schoolKey'];
+$register = $auth->register($email, $password, $passwordconform);
 
-$register = $auth->register($email, $password, $passwordconform); //$captcha = "aD1pZ7"
-//Test Password: My1Password2!haha@
-
-if ($schoolKey === 'acorn') {
-    if (!$register['error']) {                            //-
-        header('Location: activateInput(testing).php');   //This is for testing purposes without a properly set config.sql
-        exit();                                           //-
-    } else {                                           
-        echo $register['message'];
-    }
-} else {
-    echo "Please enter the correct school key.";
+if (!$register['error']) {
+        
+    $uid = $auth->getUID($email);
+    $dbh->query("INSERT INTO user_info(uid, first_name, last_name) VALUES('".$uid."','".$params['first_name']."','".$params['last_name']."')");
+        
+    header('Location: activateInput(testing).php');   //This is for testing purposes without a properly set config.sql
+    exit();
+    
+} else {    
+    echo $register['message'];   
 }
     
 ?>

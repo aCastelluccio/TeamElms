@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <?php 
 //TO-DO: if not logged in, then redirect to index.html
 session_start(); 
@@ -8,10 +9,11 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
         window.location.href = '../account/';
     </script>
 <?php } ?>
-<html>
+
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Home Page</title>
+  <title>Acorn Academy</title>
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
@@ -46,8 +48,8 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="home_page">
+    <meta name="author" content="teamelms">
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -68,15 +70,21 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home
+              <a class="nav-link" href="./">Home
                 <span class="sr-only"></span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link" href="./about/">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Favorites</a>
+              <a class="nav-link" href="./favorites/">Favorites</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../account/profile/">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../account/logout.php">Logout</a>
             </li>
           </ul>
         </div>
@@ -283,7 +291,7 @@ error_reporting(E_ALL);
     <!-- Footer -->
     <footer class="py-5 bg-dark">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
+        <p class="m-0 text-center text-white">Copyright &copy; Acorn Academy 2017</p>
       </div>
       <!-- /.container -->
     </footer>
@@ -293,8 +301,7 @@ error_reporting(E_ALL);
     <script src="vendor/popper/popper.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
-  </body>
-    </body>
-    </head>
+      </div>
+</body>
+</head>
 </html>
-

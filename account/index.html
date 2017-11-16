@@ -7,7 +7,7 @@
     <meta name="description" content="login">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Signin</title>
+    <title>Login</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/_layout/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +28,7 @@
         <h2 class="form-signin-heading">Welcome</h2>
           
         <label for="email" class="sr-only">Email</label>
-        <input type="email" id="email" name ="email" class="form-control" placeholder="Email address" required autofocus>
+        <input type="email" id="email" name ="email" class="form-control" placeholder="Enter email" required autofocus>
           
         <label for="password" class="sr-only">Password</label>
         <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
@@ -42,13 +42,17 @@
             
         </div>
           
-        <button class="btn btn-lg btn-primary btn-block" type="submit" id="signinButton">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="signinButton">Login</button>
           
       </form>
         
-        <form class="form-signin" action="register.html" method="post">
-            <button class="btn btn-lg btn-primary btn-block" type="submit" id="registerButton">Register Now</button>
-        </form>
+      <form class="form-signin" action="register.html" method="post">
+          <button class="btn btn-lg btn-primary btn-block" type="submit" id="registerButton">Register an Account</button>
+      </form>
+        
+      <div class="text-center">
+          <a class="d-block small" href="password_reset.html">Forgot Password?</a>
+      </div>
 
     </div>
 
