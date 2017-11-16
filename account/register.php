@@ -24,11 +24,6 @@ require("../vendor/ZxcvbnPhp/Zxcvbn.php");
 use ZxcvbnPhp\Zxcvbn;
 
 include("authconnect.php");
-    
-$dbh->exec("DELETE FROM attempts;");
-$dbh->exec("DELETE FROM users;");
-$dbh->exec("DELETE FROM sessions;");
-$dbh->exec("DELETE FROM requests;");
 
 $firstname = filter_var($_POST["first_name"], FILTER_SANITIZE_STRING);
 $lastname = filter_var($_POST["last_name"], FILTER_SANITIZE_STRING);
