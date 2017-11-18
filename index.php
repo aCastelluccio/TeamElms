@@ -1,6 +1,6 @@
 <?php 
 
-header('Location: ./account');
+header('Location: ./account/');
 exit();
 
 ?>

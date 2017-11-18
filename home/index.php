@@ -3,6 +3,15 @@
 <?php 
 //TO-DO: if not logged in, then redirect to index.html
 session_start(); 
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+include("mysqlconnect.php");
+include ("resize-class.php");
+require_once __DIR__.'../../vendor/autoload.php';
+
 if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === false)) { ?>
     <script text="text/javascript">
         alert("You must be logged in before you can visit this page.");
@@ -108,127 +117,70 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
         </form>
 
-    <?php        
-          
- function getClient(){
-    $client = new Google_Client();
-   // $client->setApplicationName(APPNAME);       // app name
-    $client->setClientId('1060065924858-b94sofn2u34i30j887hq5udsb1sd4tbr.apps.googleusercontent.com');             // client id
-    $client->setClientSecret('K6NBjcFIfzEkVuQRNnYGuXuq');     // client secret 
-    //$client->setRedirectUri(REDIRECT_URI);      // redirect uri
-    $client->setApprovalPrompt('auto');
+        <?php        
 
-    $client->setAccessType('offline');         // generates refresh token
-
-    //$token = '$_COOKIE['ACCESSTOKEN']';          // fetch from cookie
-
-    // if token is present in cookie
-//    if($token){
-//        // use the same token
-//        $client->setAccessToken($token);
-//    }
-
-    // this line gets the new token if the cookie token was not present
-    // otherwise, the same cookie token
-    $client->getAccessToken('ya29.GlvsBF_2sD_Bn9ioOzePSiOgEJC2NiLZ2HbG1LTclPAv3h7sGDWsjlTgJ8vaVdgSuf2_wvLz88Lj7CC6Y9oWkEpAbQEzdqmZwdoM_XXO9QOkb67giNzgMVoqeKIq');
-//    if($client->isAccessTokenExpired()){  // if token expired
-//        $refreshToken = json_decode($token)->refresh_token;
-//
-//        // refresh the token
-        $client->refreshToken('1/mZ9Ja7eNiQFrCJbETDKuYCiiPo2qppWYABYi5oTPXv0');
-//    }
-
-    return $client;
-}
-         ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-    include("mysqlconnect.php");
-    include ("resize-class.php");
-        function 
-            GetImageExtension($imagetype)
-        {
+         function getClient(){
+            $client = new Google_Client();
+            $client->setClientId('1060065924858-b94sofn2u34i30j887hq5udsb1sd4tbr.apps.googleusercontent.com');
+            $client->setClientSecret('K6NBjcFIfzEkVuQRNnYGuXuq');
+            $client->setApprovalPrompt('auto');
+            $client->setAccessType('online');
+            $client->getAccessToken('ya29.GlvsBF_2sD_Bn9ioOzePSiOgEJC2NiLZ2HbG1LTclPAv3h7sGDWsjlTgJ8vaVdgSuf2_wvLz88Lj7CC6Y9oWkEpAbQEzdqmZwdoM_XXO9QOkb67giNzgMVoqeKIq');
+            $client->refreshToken('1/mZ9Ja7eNiQFrCJbETDKuYCiiPo2qppWYABYi5oTPXv0');
+            return $client;
+        }
+         
+        function GetImageExtension($imagetype) {
            if(empty($imagetype)) return false;
-           switch($imagetype)
-           {
+            
+           switch($imagetype) {
                case 'image/bmp': return '.bmp';
                case 'image/gif': return '.gif';
                case 'image/jpeg': return '.jpg';
                case 'image/png': return '.png';
                default: return false;
            }
-         }
-
-    if (!empty($_FILES["uploadedimage"]["name"])) {
-        $file_name=$_FILES["uploadedimage"]["name"];
-        $temp_name=$_FILES["uploadedimage"]["tmp_name"];
-        $imgtype=$_FILES["uploadedimage"]["type"];
-        $ext= GetImageExtension($imgtype);
-        $imagename=date("d-m-Y")."-".time().$ext;
-        $target_path = "../images/".$imagename; 
-//        $marge_right = 10;
-//        $marge_bottom = 10;
-//        $stamp = imagecreatefrompng('acorn.png');
-//
-//        $sx = imagesx($stamp);
-//        $sy = imagesy($stamp);
-        if(move_uploaded_file($temp_name, $target_path)) {   
-//            $query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$target_path."','".date("Y-m-d")."')";
-//            mysqli_query($link, $query_upload) or die("error in $query_upload == ----> ".mysqli_error());
-//            if $imagetype ==""
-//            $im = imagecreatefromjpeg($target_path);
-//            if(!$im){
-//                $im = imagecreatefrompng($target_path);
-//            }
-//            imagecopy($im, $stamp, imagesx($im) - $sx - $marge_right, imagesy($im) - $sy - $marge_bottom, 0, 0, imagesx($stamp), imagesy($stamp));
-//            imagejpeg($im, $target_path);
-
-        } else {
-            exit("Error While uploading image on the server");
         }
-        require_once __DIR__.'../../vendor/autoload.php';
-
-                $client = getClient();
-
-//        $client = new Google_Client();
-//        $client->setAuthConfig('client_secrets.json');
-       $client->addScope(Google_Service_Drive::DRIVE);
-//
-////        if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
-//          $client->setAccessToken($_SESSION['access_token']);
-          $drive = new Google_Service_Drive($client);
-            $folderId = '0B0Uz_T5t_1jOaWMyNmh5UURaaDQ';
-        $fileMetadata = new Google_Service_Drive_DriveFile(array(
-            'name' => $target_path,
-            'parents' => array($folderId)
-        ));
-//
-        $content = file_get_contents($target_path);
-        $file = $drive->files->create($fileMetadata, array(
-            'data' => $content,
-            'mimeType' => 'image/jpeg',
-            'uploadType' => 'multipart',
-            'fields' => 'id'));
-        //printf("File ID: %s\n", $file->id);
-//        $fileMetadata = new Google_Service_Drive_DriveFile(array(
-//        'name' => 'acorn.png'));
-//    $content = file_get_contents('acorn.png');
-//    $file = $drive->files->create($fileMetadata, array(
-//        'data' => $content,
-//        'mimeType' => 'image/jpeg',
-//        'uploadType' => 'multipart',
-//        'fields' => 'id'));
-//    printf("File ID: %s\n", $file->id);
-        
-            $query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$file->id."','".date("Y-m-d")."')";
-            mysqli_query($link, $query_upload) or die("error in $query_upload == ----> ".mysqli_error());
-//        //} else {
-//          $redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/oauth2callback.php';
-//          header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
-//         // }
-    }
           
-    //echo '<meta http-equiv="refresh" content="0; URL=retrieve.php" />';
+        if (!empty($_FILES["uploadedimage"])) {
+            
+            $temp_name = $_FILES["uploadedimage"]["tmp_name"];
+            $imgtype = $_FILES["uploadedimage"]["type"];
+            $ext = GetImageExtension($imgtype);
+            $imagename = date("d-m-Y")."-".time().$ext;
+            $target_path = "../images/".$imagename; 
+
+            if(move_uploaded_file($temp_name, $target_path)) { 
+                
+            } else {
+                exit("Error While uploading image on the server");
+            }
+
+            $client = getClient();
+            $client->addScope(Google_Service_Drive::DRIVE);
+            $drive = new Google_Service_Drive($client);
+            $folderId = '0B0Uz_T5t_1jOaWMyNmh5UURaaDQ';
+
+            $fileMetadata = new Google_Service_Drive_DriveFile(array(
+                'name' => $target_path,
+                'parents' => array($folderId)
+            ));
+
+            $content = file_get_contents($target_path);
+            $file = $drive->files->create($fileMetadata, array(
+                'data' => $content,
+                'mimeType' => 'image/jpeg',
+                'uploadType' => 'multipart',
+                'fields' => 'id'));
+
+            $query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$file->id."','".date("Y-m-d")."')";
+            mysqli_query($link, $query_upload) or die("Error: #1"); ?>
+          
+            <script text="text/javascript">
+                window.location.href = "./confirm.php";
+            </script>
+        <?php }
+          
     ?>     
    
 
@@ -239,11 +191,10 @@ error_reporting(E_ALL);
           
       <!-- Project One -->
     <?php 
-          include("mysqlconnect.php");
-          $query= "SELECT images_path FROM images_tbl ORDER BY images_id DESC";          
-          $result= mysqli_query($link, $query) or die("error in $query == ----> ".mysqli_error()); 
-          while($row = mysqli_fetch_array($result)){
-          ?>
+          $query = "SELECT images_path FROM images_tbl ORDER BY images_id DESC";          
+          $result = mysqli_query($link, $query) or die("error in $query == ----> ".mysqli_error());
+          
+          while($row = mysqli_fetch_array($result)){ ?>
           
           <!-- for adding pages, add a counter: when hits certain num, point to next page -->
           
@@ -258,32 +209,7 @@ error_reporting(E_ALL);
           
         </div>
       </div>
-        <?php }?>
-
-      <!-- Pagination -->
-      <ul class="pagination justify-content-center">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-            <span class="sr-only">Previous</span>
-          </a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">1</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">3</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-            <span class="sr-only">Next</span>
-          </a>
-        </li>
-      </ul>
+        <?php } ?>
 
     </div>
     <!-- /.container -->
