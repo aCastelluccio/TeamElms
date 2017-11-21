@@ -193,7 +193,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
     <?php 
           $query = "SELECT images_path FROM images_tbl ORDER BY images_id DESC";          
           $result = mysqli_query($link, $query) or die("error in $query == ----> ".mysqli_error());
-          
+
           while($row = mysqli_fetch_array($result)){ ?>
           
           <!-- for adding pages, add a counter: when hits certain num, point to next page -->
@@ -201,9 +201,13 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
       <div class="row">
         <div class="col-md-7">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="https://drive.google.com/uc?export=view&id=<?php echo $row['images_path'];?>" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="https://drive.google.com/uc?export=view&id=<?php 
+            echo $row['images_path'];?> "alt="" height="50%" width="50%" >
+              
           </a>
+           
         </div>
+          
         <div class="col-md-5">
           <p>comment</p>
           
@@ -215,12 +219,14 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
     <!-- /.container -->
 
     <!-- Footer -->
+<!--
     <footer class="py-5 bg-dark">
       <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Acorn Academy 2017</p>
       </div>
-      <!-- /.container -->
+       /.container 
     </footer>
+-->
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -228,6 +234,13 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
       </div>
+         <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Acorn Academy 2017</p>
+      </div>
+      <!-- /.container -->
+    </footer>
 </body>
 </head>
 </html>
