@@ -177,11 +177,16 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                   'fields' => 'id'));
 
               $query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$file->id."','".date("Y-m-d")."')";
-              mysqli_query($link, $query_upload) or die("Error: #1");
+              mysqli_query($link, $query_upload) or die("Error: #1");?>
+
+              <script text="text/javascript">
+                  window.location.href = "./confirm.php";
+              </script>
             } }
 
-    ?>
+          <?php } }
 
+      ?>
 
 
     <!-- Space -->
@@ -196,8 +201,8 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
           while($row = mysqli_fetch_array($result)){ ?>
 
           <!-- for adding pages, add a counter: when hits certain num, point to next page -->
-          
-          
+
+
 
       <div class="row">
         <div class="col-md-5">
