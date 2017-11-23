@@ -3,11 +3,7 @@
 <?php
 //TO-DO: if not logged in, then redirect to index.html
 session_start();
-ini_set('post_max_size', '10000M');
-ini_set('upload_max_filesize', '10000M');
-ini_set('max_file_uploads', '2000');
-ini_set('max_execution_time', '2000');
-ini_set('max_input_time', '2000');
+
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -181,12 +177,8 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                   'fields' => 'id'));
 
               $query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$file->id."','".date("Y-m-d")."')";
-              mysqli_query($link, $query_upload) or die("Error: #1"); ?>
-
-              <script text="text/javascript">
-                  window.location.href = "./confirm.php";
-              </script>
-        <?php } }
+              mysqli_query($link, $query_upload) or die("Error: #1");
+            } }
 
     ?>
 
