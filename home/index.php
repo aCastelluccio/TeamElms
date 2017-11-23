@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 
-<?php 
+<?php
 //TO-DO: if not logged in, then redirect to index.html
-session_start(); 
+session_start();
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -23,36 +23,36 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 <head>
   <meta charset="UTF-8">
   <title>Acorn Academy</title>
-  
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css'>
 
     <head>
-    
+
     <!-- Font -->
   <link href='https://fonts.googleapis.com/css?family=Dekko' rel='stylesheet'>
-    
+
     <!-- CSS -->
     <style>
-      
+
        body {
-      padding-top: 70px; 
+      padding-top: 70px;
       font-family: 'Dekko';
       }
-      
+
       h1 { font-size: 80px; }
       h2 { font-size: 30px; }
-      
+
       .starter-template {
-      padding: 5px 5px; 
+      padding: 5px 5px;
       text-align: center;
       }
-      
+
       .pagination {
         margin-bottom: 5px;
       }
-      
+
   </style>
 
     <meta charset="utf-8">
@@ -107,17 +107,17 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
       <div style = "text-align: center" >
       <h1 class="my-4">Acorn Academy</h1>
 
-     
+
        <!-- Uploading An Image -->
         <form method="post" enctype="multipart/form-data" >
-                    
-                    
-          <input type="file" name="uploadedimage">
+
+
+          <input type="file" name="uploadedimage[]" multiple>
           <input type="submit" value="Upload Image" enctype="multipart/form-data">
 
         </form>
 
-        <?php        
+        <?php
 
          function getClient(){
             $client = new Google_Client();
@@ -129,10 +129,10 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
             $client->refreshToken('1/mZ9Ja7eNiQFrCJbETDKuYCiiPo2qppWYABYi5oTPXv0');
             return $client;
         }
-         
+
         function GetImageExtension($imagetype) {
            if(empty($imagetype)) return false;
-            
+
            switch($imagetype) {
                case 'image/bmp': return '.bmp';
                case 'image/gif': return '.gif';
@@ -141,76 +141,78 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                default: return false;
            }
         }
-          
+
         if (!empty($_FILES["uploadedimage"])) {
-            
-            $temp_name = $_FILES["uploadedimage"]["tmp_name"];
-            $imgtype = $_FILES["uploadedimage"]["type"];
-            $ext = GetImageExtension($imgtype);
-            $imagename = date("d-m-Y")."-".time().$ext;
-            $target_path = "../images/".$imagename; 
+            $myFile = $_FILES['uploadedimage'];
+            $file_count = count($myFile["name"]);
+            for ($i = 0; $i < $file_count; $i++) {
+              $temp_name = $myFile["tmp_name"][$i];
+              $imgtype = $myFile["type"][$i];
+              $ext = GetImageExtension($imgtype);
+              $imagename = date("d-m-Y")."-".$myFile["name"][$i];
+              $target_path = "../images/".$imagename;
 
-            if(move_uploaded_file($temp_name, $target_path)) { 
-                
-            } else {
-                exit("Error While uploading image on the server");
-            }
+              if(move_uploaded_file($temp_name, $target_path)) {
 
-            $client = getClient();
-            $client->addScope(Google_Service_Drive::DRIVE);
-            $drive = new Google_Service_Drive($client);
-            $folderId = '0B0Uz_T5t_1jOaWMyNmh5UURaaDQ';
+              } else {
+                  exit("Error While uploading image on the server");
+              }
 
-            $fileMetadata = new Google_Service_Drive_DriveFile(array(
-                'name' => $target_path,
-                'parents' => array($folderId)
-            ));
+              $client = getClient();
+              $client->addScope(Google_Service_Drive::DRIVE);
+              $drive = new Google_Service_Drive($client);
+              $folderId = '0B0Uz_T5t_1jOaWMyNmh5UURaaDQ';
 
-            $content = file_get_contents($target_path);
-            $file = $drive->files->create($fileMetadata, array(
-                'data' => $content,
-                'mimeType' => 'image/jpeg',
-                'uploadType' => 'multipart',
-                'fields' => 'id'));
+              $fileMetadata = new Google_Service_Drive_DriveFile(array(
+                  'name' => $target_path,
+                  'parents' => array($folderId)
+              ));
 
-            $query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$file->id."','".date("Y-m-d")."')";
-            mysqli_query($link, $query_upload) or die("Error: #1"); ?>
-          
-            <script text="text/javascript">
-                window.location.href = "./confirm.php";
-            </script>
-        <?php }
-          
-    ?>     
-   
+              $content = file_get_contents($target_path);
+              $file = $drive->files->create($fileMetadata, array(
+                  'data' => $content,
+                  'mimeType' => 'image/jpeg',
+                  'uploadType' => 'multipart',
+                  'fields' => 'id'));
+
+              $query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$file->id."','".date("Y-m-d")."')";
+              mysqli_query($link, $query_upload) or die("Error: #1"); ?>
+
+              <script text="text/javascript">
+                  window.location.href = "./confirm.php";
+              </script>
+        <?php } }
+
+    ?>
+
 
 
     <!-- Space -->
     <pre class="tab"> </pre>
-   
-          
+
+
       <!-- Project One -->
-    <?php 
-          $query = "SELECT images_path FROM images_tbl ORDER BY images_id DESC";          
+    <?php
+          $query = "SELECT images_path FROM images_tbl ORDER BY images_id DESC";
           $result = mysqli_query($link, $query) or die("error in $query == ----> ".mysqli_error());
 
           while($row = mysqli_fetch_array($result)){ ?>
-          
+
           <!-- for adding pages, add a counter: when hits certain num, point to next page -->
-          
+
       <div class="row">
         <div class="col-md-7">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="https://drive.google.com/uc?export=view&id=<?php 
+            <img class="img-fluid rounded mb-3 mb-md-0" src="https://drive.google.com/uc?export=view&id=<?php
             echo $row['images_path'];?> "alt="" height="50%" width="50%" >
-              
+
           </a>
-           
+
         </div>
-          
+
         <div class="col-md-5">
           <p>comment</p>
-          
+
         </div>
       </div>
         <?php } ?>
@@ -224,7 +226,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
       <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Acorn Academy 2017</p>
       </div>
-       /.container 
+       /.container
     </footer>
 -->
 
