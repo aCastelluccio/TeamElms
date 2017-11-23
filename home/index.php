@@ -3,6 +3,11 @@
 <?php
 //TO-DO: if not logged in, then redirect to index.html
 session_start();
+ini_set('post_max_size', '10000M');
+ini_set('upload_max_filesize', '10000M');
+ini_set('max_file_uploads', '2000');
+ini_set('max_execution_time', '2000');
+ini_set('max_input_time', '2000');
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -199,34 +204,27 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
           while($row = mysqli_fetch_array($result)){ ?>
 
           <!-- for adding pages, add a counter: when hits certain num, point to next page -->
-          
-          
-          
-
 
       <div class="row">
         <div class="col-md-7">
-            <div class="thumbnail">
           <a href="#">
             <img class="img-fluid rounded mb-3 mb-md-0" src="https://drive.google.com/uc?export=view&id=<?php
             echo $row['images_path'];?> "alt="" height="50%" width="50%" >
-              <div class="caption">
-          <p>The email address will go here</p>
-                  </div>
 
           </a>
 
         </div>
 
+        <div class="col-md-5">
+          <p>comment</p>
+
+        </div>
       </div>
           <br>
-           </div>
-           
         <?php } ?>
 
-   </div>
-          
-    
+    </div>
+
     <!-- /.container -->
 
     <!-- Footer -->
