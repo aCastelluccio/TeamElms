@@ -8,7 +8,7 @@ ini_set('upload_max_filesize', '10000M');
 ini_set('max_file_uploads', '2000');
 ini_set('max_execution_time', '2000');
 ini_set('max_input_time', '2000');
-ini_set('memory_limit','12000');
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -224,7 +224,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
         <?php } ?>
 
     </div>
-    
+
     <!-- /.container -->
 
     <!-- Footer -->
