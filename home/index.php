@@ -142,7 +142,10 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                default: return false;
            }
         }
-
+        $client = getClient();
+        $client->addScope(Google_Service_Drive::DRIVE);
+        $drive = new Google_Service_Drive($client);
+        $folderId = '0B0Uz_T5t_1jOaWMyNmh5UURaaDQ';
         if (!empty($_FILES["uploadedimage"])) {
             $myFile = $_FILES['uploadedimage'];
             $file_count = count($myFile["name"]);
@@ -159,10 +162,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                   exit("Error While uploading image on the server");
               }
 
-              $client = getClient();
-              $client->addScope(Google_Service_Drive::DRIVE);
-              $drive = new Google_Service_Drive($client);
-              $folderId = '0B0Uz_T5t_1jOaWMyNmh5UURaaDQ';
+
 
               $fileMetadata = new Google_Service_Drive_DriveFile(array(
                   'name' => $target_path,
