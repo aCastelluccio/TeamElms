@@ -220,9 +220,11 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
         </div>
       </div>
+          <br>
         <?php } ?>
 
     </div>
+    
     <!-- /.container -->
 
     <!-- Footer -->
