@@ -182,7 +182,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
               <script text="text/javascript">
                   window.location.href = "./confirm.php";
               </script>
-            } }
+        
 
           <?php } }
 
