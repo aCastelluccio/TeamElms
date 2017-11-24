@@ -197,14 +197,19 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
 
       <!-- Project One -->
+          
+        
+
     <?php
           $query = "SELECT images_path FROM images_tbl ORDER BY images_id DESC";
           $result = mysqli_query($link, $query) or die("error in $query == ----> ".mysqli_error());
 
           while($row = mysqli_fetch_array($result)){ ?>
 
-          <!-- for adding pages, add a counter: when hits certain num, point to next page -->
+<!--
+           for adding pages, add a counter: when hits certain num, point to next page 
           
+-->
           
 
       <div class="row">
