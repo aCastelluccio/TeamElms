@@ -220,7 +220,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
             <div class="thumbnail">
           <a href="#">
             <img class="img-fluid rounded mb-3 mb-md-0" src="https://drive.google.com/uc?export=view&id=<?php
-            echo $row['images_path'];?> "alt="" height="50%" width="50%" >
+            echo $row['images_path'];?>" alt="" height="50%" width="50%" >
               <div class="caption">
           <p><?php echo $first . ' ' . $last; ?></p>
                   </div>
