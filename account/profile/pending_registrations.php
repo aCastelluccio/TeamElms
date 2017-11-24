@@ -8,6 +8,7 @@ $dbh = new PDO("mysql:host=xq7t6tasopo9xxbs.cbetxkdyhwsb.us-east-1.rds.amazonaws
 $config = new PHPAuth\Config($dbh);
 $auth   = new PHPAuth\Auth($dbh, $config);
 
+//change to select people from user_info that aren't approved, add to this table, and then do the rest
 $sth = $dbh->prepare("SELECT * FROM pending_registration_requests");
 $sth->execute();
 $result = $sth->fetchAll(PDO::FETCH_ASSOC);

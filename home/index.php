@@ -196,20 +196,30 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
       <!-- Project One -->
     <?php
+          //getting iamge
           $query = "SELECT images_path FROM images_tbl ORDER BY images_id DESC";
           $result = mysqli_query($link, $query) or die("error in $query == ----> ".mysqli_error());
           
-          //Displaying name of user who posted the picture
-          $posterEmailQuery = "SELECT poster_email FROM images_tbl";
-          $result2 = mysqli_query($link, $posterEmailQuery) or die("error in $query == ----> ".mysqli_error());
+          while($row = mysqli_fetch_array($result)){ 
+          
+          //getting image's id based on the image's path
+          $imgPx = $row['images_path'];
+          $imgP = mysqli_query($link, "SELECT images_id FROM images_tbl WHERE images_path = '$imgPx'") or die("There was a problem getting the image's id");
+          $imgID = $imgP->fetch_assoc()['images_id'];
+              
+          //getting poster's email based on the image id
+          $posterEmailQuery = "SELECT poster_email FROM images_tbl WHERE images_id = $imgID";
+          $result2 = mysqli_query($link, $posterEmailQuery) or die("There was a problem getting the email of the user who posted the image");
           $posterEmail = $result2->fetch_assoc()['poster_email'];
+          
+          //getting the first and last name based on the poster's email
           $displayUID = $auth->getUID($posterEmail);
           $firstResult = mysqli_query($link, "SELECT first_name FROM user_info WHERE uid = $displayUID");
           $lastResult = mysqli_query($link, "SELECT last_name FROM user_info WHERE uid = $displayUID");
           $first = $firstResult->fetch_assoc()['first_name'];
           $last = $lastResult->fetch_assoc()['last_name'];
-          
-          while($row = mysqli_fetch_array($result)){ ?>
+        
+    ?>
 
           <!-- for adding pages, add a counter: when hits certain num, point to next page -->
 
