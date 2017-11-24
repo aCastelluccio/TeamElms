@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<?php
+
+session_start();
+
+?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -28,7 +33,7 @@
         <h2 class="form-signin-heading">Welcome</h2>
           
         <label for="email" class="sr-only">Email</label>
-        <input type="email" id="email" name ="email" class="form-control" placeholder="Enter email" required autofocus>
+        <input type="email" id="email" name ="email" value="<?php echo $_SESSION['remember']; ?>" class="form-control" placeholder="Enter email" required autofocus>
           
         <label for="password" class="sr-only">Password</label>
         <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>

@@ -3,11 +3,7 @@
 <?php
 //TO-DO: if not logged in, then redirect to index.html
 session_start();
-ini_set('post_max_size', '10000M');
-ini_set('upload_max_filesize', '10000M');
-ini_set('max_file_uploads', '2000');
-ini_set('max_execution_time', '2000');
-ini_set('max_input_time', '2000');
+
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -15,6 +11,7 @@ error_reporting(E_ALL);
 
 include("mysqlconnect.php");
 include ("resize-class.php");
+include("../account/authconnect.php");
 require_once __DIR__.'../../vendor/autoload.php';
 
 if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === false)) { ?>
@@ -146,7 +143,10 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                default: return false;
            }
         }
-
+        $client = getClient();
+        $client->addScope(Google_Service_Drive::DRIVE);
+        $drive = new Google_Service_Drive($client);
+        $folderId = '0B0Uz_T5t_1jOaWMyNmh5UURaaDQ';
         if (!empty($_FILES["uploadedimage"])) {
             $myFile = $_FILES['uploadedimage'];
             $file_count = count($myFile["name"]);
@@ -163,10 +163,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                   exit("Error While uploading image on the server");
               }
 
-              $client = getClient();
-              $client->addScope(Google_Service_Drive::DRIVE);
-              $drive = new Google_Service_Drive($client);
-              $folderId = '0B0Uz_T5t_1jOaWMyNmh5UURaaDQ';
+
 
               $fileMetadata = new Google_Service_Drive_DriveFile(array(
                   'name' => $target_path,
@@ -180,16 +177,17 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                   'uploadType' => 'multipart',
                   'fields' => 'id'));
 
-              $query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$file->id."','".date("Y-m-d")."')";
-              mysqli_query($link, $query_upload) or die("Error: #1"); ?>
+              $query_upload="INSERT INTO images_tbl(poster_email, images_path, submission_date) VALUES ('".$_SESSION['email']."','".$file->id."','".date("Y-m-d")."')";
+              mysqli_query($link, $query_upload) or die("Error: #1");?>
 
               <script text="text/javascript">
                   window.location.href = "./confirm.php";
               </script>
-        <?php } }
+        
 
-    ?>
+          <?php } }
 
+      ?>
 
 
     <!-- Space -->
@@ -197,29 +195,34 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
 
       <!-- Project One -->
-          
-        
-
     <?php
           $query = "SELECT images_path FROM images_tbl ORDER BY images_id DESC";
           $result = mysqli_query($link, $query) or die("error in $query == ----> ".mysqli_error());
-
+          
+          //Displaying name of user who posted the picture
+          $posterEmailQuery = "SELECT poster_email FROM images_tbl";
+          $result2 = mysqli_query($link, $posterEmailQuery) or die("error in $query == ----> ".mysqli_error());
+          $posterEmail = $result2->fetch_assoc()['poster_email'];
+          $displayUID = $auth->getUID($posterEmail);
+          $firstResult = mysqli_query($link, "SELECT first_name FROM user_info WHERE uid = $displayUID");
+          $lastResult = mysqli_query($link, "SELECT last_name FROM user_info WHERE uid = $displayUID");
+          $first = $firstResult->fetch_assoc()['first_name'];
+          $last = $lastResult->fetch_assoc()['last_name'];
+          
           while($row = mysqli_fetch_array($result)){ ?>
 
-<!--
-           for adding pages, add a counter: when hits certain num, point to next page 
-          
--->
-          
+          <!-- for adding pages, add a counter: when hits certain num, point to next page -->
+
+
 
       <div class="row">
         <div class="col-md-5">
             <div class="thumbnail">
           <a href="#">
             <img class="img-fluid rounded mb-3 mb-md-0" src="https://drive.google.com/uc?export=view&id=<?php
-            echo $row['images_path'];?> "alt="" height="50%" width="50%" >
+            echo $row['images_path'];?>" alt="" height="50%" width="50%" >
               <div class="caption">
-          <p>The email address will go here</p>
+          <p><?php echo $first . ' ' . $last; ?></p>
                   </div>
 
           </a>
