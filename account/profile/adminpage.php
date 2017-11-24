@@ -40,7 +40,7 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a href="#">Registered Accounts</a>
+              <a href="./registered_accounts.php">Registered Accounts</a>
             </li>
             <li>
               <a href="./pending_registrations.php">Pending Registrations</a>
