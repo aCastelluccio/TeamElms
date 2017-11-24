@@ -11,6 +11,7 @@ error_reporting(E_ALL);
 
 include("mysqlconnect.php");
 include ("resize-class.php");
+include("../account/authconnect.php");
 require_once __DIR__.'../../vendor/autoload.php';
 
 if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === false)) { ?>
@@ -176,7 +177,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                   'uploadType' => 'multipart',
                   'fields' => 'id'));
 
-              $query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$file->id."','".date("Y-m-d")."')";
+              $query_upload="INSERT INTO images_tbl(poster_email, images_path, submission_date) VALUES ('".$_SESSION['email']."','".$file->id."','".date("Y-m-d")."')";
               mysqli_query($link, $query_upload) or die("Error: #1");?>
 
               <script text="text/javascript">
@@ -197,7 +198,17 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
     <?php
           $query = "SELECT images_path FROM images_tbl ORDER BY images_id DESC";
           $result = mysqli_query($link, $query) or die("error in $query == ----> ".mysqli_error());
-
+          
+          //Displaying name of user who posted the picture
+          $posterEmailQuery = "SELECT poster_email FROM images_tbl";
+          $result2 = mysqli_query($link, $posterEmailQuery) or die("error in $query == ----> ".mysqli_error());
+          $posterEmail = $result2->fetch_assoc()['poster_email'];
+          $displayUID = $auth->getUID($posterEmail);
+          $firstResult = mysqli_query($link, "SELECT first_name FROM user_info WHERE uid = $displayUID");
+          $lastResult = mysqli_query($link, "SELECT last_name FROM user_info WHERE uid = $displayUID");
+          $first = $firstResult->fetch_assoc()['first_name'];
+          $last = $lastResult->fetch_assoc()['last_name'];
+          
           while($row = mysqli_fetch_array($result)){ ?>
 
           <!-- for adding pages, add a counter: when hits certain num, point to next page -->
@@ -211,7 +222,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
             <img class="img-fluid rounded mb-3 mb-md-0" src="https://drive.google.com/uc?export=view&id=<?php
             echo $row['images_path'];?> "alt="" height="50%" width="50%" >
               <div class="caption">
-          <p>The email address will go here</p>
+          <p><?php echo $first . ' ' . $last; ?></p>
                   </div>
 
           </a>
