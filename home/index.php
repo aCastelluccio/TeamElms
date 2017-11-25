@@ -116,7 +116,8 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
           <input type="file" name="uploadedimage[]" multiple>
           <input type="submit" value="Upload Image" enctype="multipart/form-data">
-
+          <p><a href="https://drive.google.com/drive/u/1/folders/0B0Uz_T5t_1jOaWMyNmh5UURaaDQ">
+            If you are uploading more than 20 images, upload them directly here</a></p>
         </form>
 
         <?php
@@ -195,7 +196,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
         $folderId = '0B0Uz_T5t_1jOaWMyNmh5UURaaDQ';
 
         refreshDataBaseFromDrive($drive,$folderId,$link);
-        
+
         if (!empty($_FILES["uploadedimage"])) {
             $myFile = $_FILES['uploadedimage'];
             $file_count = count($myFile["name"]);
