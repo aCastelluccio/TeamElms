@@ -274,12 +274,13 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
           <!-- for adding pages, add a counter: when hits certain num, point to next page -->
 
 
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/10.3.5/lazyload.min.js"></script>
+  <script text="text/javascript"> var myLazyLoad = new LazyLoad(); </script>
       <div class="row">
         <div class="col-md-5">
             <div class="thumbnail">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="https://drive.google.com/uc?export=view&id=<?php
+            <img class="img-fluid rounded mb-3 mb-md-0" data-src="https://drive.google.com/uc?export=view&id=<?php
             echo $row['images_path'];?>" alt="" height="50%" width="50%" >
               <div class="caption">
           <p><?php echo $first . ' ' . $last; ?></p>
