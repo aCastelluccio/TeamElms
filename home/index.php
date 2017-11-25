@@ -283,9 +283,54 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
             <img class="img-fluid rounded mb-3 mb-md-0" data-src="https://drive.google.com/uc?export=view&id=<?php
             echo $row['images_path'];?>" alt="" height="50%" width="50%" >
               <div class="caption">
+                <div id="some-div">
           <p><?php echo $first . ' ' . $last; ?></p>
-                  </div>
+                    <span id="some-element"> 
+                          
+                            <!-- BUTTONS: REPORT & EMAIL -->
+                          <form action="/action_page.php" method="get">
+                              <button type="submit" >Email</button>
+                              <button type="submit" >Report</button>
+                          </form>
+                          
+                           <!-- Space -->
+                          <pre class="tab"> </pre>
+                          
+                          <!-- PLACEHOLDER COMMENTS -->
+                          <p> comments </p>
+                          <p> comments </p>
+                          <p> comments </p>
+                          <p> comments </p>
+                          <p> comments </p>
 
+
+                          <!-- ADD A COMMENT -->
+                          <form action="/action_page.php" method="get">
+                              <input type="text" name="lname" placeholder="write a comment..."><br>
+                              <button class="commentbutton" type="submit">Submit Comment</button>
+                          </form>
+
+                      </span>
+                  </div>
+                  <div>
+                      <style> 
+                          button.commentbutton {
+                              margin-top: 10px;
+                          }
+                          #some-element {
+                              border: 1px solid #ccc;
+                              display: none;
+                              font-size: 15px;
+                              margin-top: 15px;
+                              padding: 15px;
+                          }
+                          
+                          #some-div:hover #some-element {
+                              display: block;
+                          }
+                      </style>
+                  </div>
+              </div>
           </a>
 
         </div>

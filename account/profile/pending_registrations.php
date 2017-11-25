@@ -52,7 +52,7 @@ $updatedAt = date('m-d-Y H:i');
           <i class="fa fa-table"></i> Account Registration Requests</div>
         <div class="card-body">
           <div class="table-responsive">
-            <form action="" method="post">
+            <form method="post">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
@@ -66,7 +66,7 @@ $updatedAt = date('m-d-Y H:i');
                 while ($count1 < $arrayCount) { ?>
                     <tr>
                       <td><?php echo $result[$count1]['first_name'] . ' ' . $result[$count1]['last_name'] ?></td>
-                      <td name="cbemail"id="cbemail"><?php echo $result[$count1]['email'] ?></td>
+                      <td><input id="cbemail<?php echo $count1 ?>" name="cbemail<?php echo $count1 ?>" value="<?php echo $result[$count1]['email'] ?>"/></td>
                       <td><?php echo $result[$count1]['dt'] ?></td>
                       <td>
                           <div>
@@ -96,13 +96,15 @@ $updatedAt = date('m-d-Y H:i');
                     // and the current value is retrieved using .prop() method
                     $(group).prop("checked", false);
                     $box.prop("checked", true);
-                    indexOf.push($(this).closest('tr').index() + 1); 
+                    indexOf.push($(this).closest('tr').index() + 1); //Solve problem where if you check a checkbox and then change                                                      it to the other option, it still adds the initially checked                                                      option
                   } else {
                     $box.prop("checked", false);
+                    indexOf.pop($(this).closest('tr').index() + 1);
                   }
                 });
                  
                 function registerAccounts() {
+                    <?php if (isset($_POST['confirmButton'])) { ?>
                     var cbs = [];
                     var checkboxes = document.forms[0];
                     var i;
@@ -115,51 +117,36 @@ $updatedAt = date('m-d-Y H:i');
                     for (var e = 0; e < indexOf.length; e++) {
                         var temail = document.getElementById("dataTable").rows[indexOf[e]].cells[1].innerHTML;
                         alert(temail);
-                        localStorage.setItem("email", temail);
                     }
                     
-                    var value = localStorage.getItem("email");
- 
-                    jQuery.post("pending_registrations.php", {myKey: value}, function(data)
-                    {
-                    }).fail(function()
-                    {
-                      alert("Error #2");
-                    });
-                    
-                    <?php
-                    if(isset($_POST['confirmButton'])) { ?>
-                        var j;
-                        for (j = 0; j < cbs.length; j++) {
-                            <?php 
-                            $count2 = $_POST['myKey'];
+                    var j;
+                    for (j = 0; j < cbs.length; j++) {
+                        <?php
+                        $cbemailCount = 'cbemail' . $count1; //Get the specific cbemail row that's clicked -> retrieves specific email address
+                        $cbemail = $_POST[$cbemailCount]; 
+                        ?>
+                        if (cbs[j].value === "Yes") {
+                            <?php
+                            $uid = $auth->getUID($cbemail);
+                            $dbh->query("UPDATE user_info SET approved=1 WHERE uid = $uid");
+                            //$dbh->query("DELETE FROM pending_registration_requests WHERE email = '".$result[$count2]['email']."'");
                             ?>
-                            if (cbs[j].value == "Yes") {
-                                <?php
-                                $uid = $auth->getUID($count2);
-                                //$dbh->query("UPDATE user_info SET approved=1 WHERE uid = $uid");
-                                //$dbh->query("DELETE FROM pending_registration_requests WHERE email = '".$result[$count2]['email']."'");
-                                ?>
-                                alert("yes email: <?php echo $count2 ?>");
-                            }
-                            if (cbs[j].value == "No") {
-                                <?php
-                                $uid = $auth->getUID($result[$count2]['email']);
-                                //$dbh->query("UPDATE user_info SET approved=0 WHERE uid = $uid");
-                                //$dbh->query("DELETE FROM pending_registration_requests WHERE email = '".$result[$count2]['email']."'");
-                                ?>
-                                //alert("no UID: <?php echo $uid ?>");
-                            }
+                            alert("YES checkbox; <?php echo 'cbemail: ' . $count1 . ', uid: ' .  $uid ?>");
+                        } else if (cbs[j].value === "No") {
+                            <?php
+                            $uid = $auth->getUID($cbemail);
+                            $dbh->query("UPDATE user_info SET approved=0 WHERE uid = $uid");
+                            //$dbh->query("DELETE FROM pending_registration_requests WHERE email = '".$result[$count2]['email']."'");
+                            ?>
+                            alert("NO checkbox; <?php echo 'cbemail: ' . $cbemail . ', uid: ' .  $uid ?>");
                         }
-                <?php } ?>
-                 
-             }
+                    } 
+                    <?php } ?>
+                }
                 
-             
             </script>
-                
-            <button id="confirmButton" name="confirmButton" type="submit" onclick="registerAccounts();">Confirm</button>
-            </form>
+                <button id="confirmButton" name="confirmButton" type="submit" onclick="registerAccounts();">Confirm</button>
+          </form>
           </div>
         </div>
         <div class="card-footer small text-muted">Updated <?php echo $updatedAt; ?></div>
