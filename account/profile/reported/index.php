@@ -11,6 +11,7 @@ $auth   = new PHPAuth\Auth($dbh, $config);
 $sth = $dbh->prepare("SELECT images_path, poster_email, submission_date FROM images_tbl WHERE reported = 1");
 $sth->execute();
 $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+
 $arrayCount = count($result);
 $count1 = 0;
 $updatedAt = date('m-d-Y H:i');
