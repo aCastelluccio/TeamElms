@@ -196,7 +196,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
       <!-- Project One -->
     <?php
-          //getting iamge
+          //getting an image
           $query = "SELECT images_path FROM images_tbl ORDER BY images_id DESC";
           $result = mysqli_query($link, $query) or die("error in $query == ----> ".mysqli_error());
           
