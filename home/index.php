@@ -121,6 +121,52 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
         <?php
 
+
+        function refreshDataBaseFromDrive($driveService, $folderId,$link) {
+          $pageToken = null;
+
+          $response = $driveService->files->listFiles(array(
+            'q' => "'0B0Uz_T5t_1jOaWMyNmh5UURaaDQ' in parents and trashed = false",
+            'spaces' => 'drive',
+            'pageToken' => $pageToken,
+            'fields' => 'nextPageToken, files(id, name)',
+          ));
+          foreach ($response->files as $file) {
+            $query="SELECT images_path FROM images_tbl ORDER BY images_id DESC";
+
+
+            $result = mysqli_query($link, $query) or die("error in $query == ----> ".mysqli_error());
+            $found = false;
+            while($row = mysqli_fetch_array($result)){
+              if ($row['images_path'] == $file->id)
+              $found = true;
+
+            }
+            if (!$found){
+              $query_upload="INSERT INTO images_tbl(images_path, submission_date) VALUES ('".$file->id."','".date("Y-m-d")."')";
+              mysqli_query($link, $query_upload) or die("Error: #1");
+            }
+          }
+          $result = mysqli_query($link, $query) or die("error in $query == ----> ".mysqli_error());
+
+          while($row = mysqli_fetch_array($result)){
+            $found = false;
+            foreach ($response->files as $file) {
+              if ($row['images_path'] == $file->id)
+              $found = true;
+
+            }
+            if(!$found){
+              $query_delete="DELETE FROM images_tbl WHERE images_path = '$row[images_path]'";
+              mysqli_query($link, $query_delete) or die("Error: #1");
+
+            }
+
+          }
+        }
+
+
+
          function getClient(){
             $client = new Google_Client();
             $client->setClientId('1060065924858-b94sofn2u34i30j887hq5udsb1sd4tbr.apps.googleusercontent.com');
@@ -147,6 +193,9 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
         $client->addScope(Google_Service_Drive::DRIVE);
         $drive = new Google_Service_Drive($client);
         $folderId = '0B0Uz_T5t_1jOaWMyNmh5UURaaDQ';
+
+        refreshDataBaseFromDrive($drive,$folderId,$link);
+        
         if (!empty($_FILES["uploadedimage"])) {
             $myFile = $_FILES['uploadedimage'];
             $file_count = count($myFile["name"]);
@@ -183,7 +232,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
               <script text="text/javascript">
                   window.location.href = "./confirm.php";
               </script>
-        
+
 
           <?php } }
 
@@ -199,26 +248,26 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
           //getting iamge
           $query = "SELECT images_path FROM images_tbl ORDER BY images_id DESC";
           $result = mysqli_query($link, $query) or die("error in $query == ----> ".mysqli_error());
-          
-          while($row = mysqli_fetch_array($result)){ 
-          
+
+          while($row = mysqli_fetch_array($result)){
+
           //getting image's id based on the image's path
           $imgPx = $row['images_path'];
           $imgP = mysqli_query($link, "SELECT images_id FROM images_tbl WHERE images_path = '$imgPx'") or die("There was a problem getting the image's id");
           $imgID = $imgP->fetch_assoc()['images_id'];
-              
+
           //getting poster's email based on the image id
           $posterEmailQuery = "SELECT poster_email FROM images_tbl WHERE images_id = $imgID";
           $result2 = mysqli_query($link, $posterEmailQuery) or die("There was a problem getting the email of the user who posted the image");
           $posterEmail = $result2->fetch_assoc()['poster_email'];
-          
+
           //getting the first and last name based on the poster's email
           $displayUID = $auth->getUID($posterEmail);
           $firstResult = mysqli_query($link, "SELECT first_name FROM user_info WHERE uid = $displayUID");
           $lastResult = mysqli_query($link, "SELECT last_name FROM user_info WHERE uid = $displayUID");
           $first = $firstResult->fetch_assoc()['first_name'];
           $last = $lastResult->fetch_assoc()['last_name'];
-        
+
     ?>
 
           <!-- for adding pages, add a counter: when hits certain num, point to next page -->
