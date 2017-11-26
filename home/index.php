@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-
 <?php
 //TO-DO: if not logged in, then redirect to index.html
 session_start();
-
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -30,7 +28,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css'>
 
-    <head>
+  <head>
 
     <!-- Font -->
   <link href='https://fonts.googleapis.com/css?family=Dekko' rel='stylesheet'>
@@ -109,10 +107,8 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
       <div style = "text-align: center" >
       <h1 class="my-4">Acorn Academy</h1>
 
-
        <!-- Uploading An Image -->
         <form method="post" enctype="multipart/form-data" >
-
 
           <input type="file" name="uploadedimage[]" multiple>
           <input type="submit" value="Upload Image" enctype="multipart/form-data">
@@ -121,7 +117,6 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
         </form>
 
         <?php
-
 
         function refreshDataBaseFromDrive($driveService, $folderId,$link) {
           $pageToken = null;
@@ -166,9 +161,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
           }
         }
 
-
-
-         function getClient(){
+        function getClient(){
             $client = new Google_Client();
             $client->setClientId('1060065924858-b94sofn2u34i30j887hq5udsb1sd4tbr.apps.googleusercontent.com');
             $client->setClientSecret('K6NBjcFIfzEkVuQRNnYGuXuq');
@@ -213,8 +206,6 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                   exit("Error While uploading image on the server");
               }
 
-
-
               $fileMetadata = new Google_Service_Drive_DriveFile(array(
                   'name' => $target_path,
                   'parents' => array($folderId)
@@ -234,15 +225,23 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                   window.location.href = "./confirm.php";
               </script>
 
-
-          <?php } }
+          <?php } 
+        }
+          
+        function reportPhoto() {
+            $reportButton = $_POST['reportButton'];
+            $photo = $_POST['photoToReport'];
+            
+            if (isset($reportButton)) {
+                $sth = $dbh->prepare("UPDATE images_tbl SET reported=1 WHERE images_path = $photo");
+                $sth->execute();
+            }
+        }
 
       ?>
 
-
     <!-- Space -->
     <pre class="tab"> </pre>
-
 
       <!-- Project One -->
     <?php
@@ -279,18 +278,18 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
       <div class="row">
         <div class="col-md-5">
             <div class="thumbnail">
-          <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" data-src="https://drive.google.com/uc?export=view&id=<?php
+          <a>
+            <img name="photoToReport" class="img-fluid rounded mb-3 mb-md-0" data-src="https://drive.google.com/uc?export=view&id=<?php
             echo $row['images_path'];?>" alt="" height="50%" width="50%" >
               <div class="caption">
                 <div id="some-div">
-          <p><?php echo $first . ' ' . $last; ?></p>
+                <p><?php echo $first . ' ' . $last; ?></p>
                     <span id="some-element"> 
                           
                             <!-- BUTTONS: REPORT & EMAIL -->
-                          <form action="/action_page.php" method="get">
-                              <button type="submit" >Email</button>
-                              <button type="submit" >Report</button>
+                          <form method="post">
+                              <button type="submit">Email <?php echo $first ?></button>
+                              <button name="reportButton" type="submit">Report This Photo</button>
                           </form>
                           
                            <!-- Space -->
@@ -303,13 +302,11 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                           <p> comments </p>
                           <p> comments </p>
 
-
                           <!-- ADD A COMMENT -->
                           <form action="/action_page.php" method="get">
                               <input type="text" name="lname" placeholder="write a comment..."><br>
                               <button class="commentbutton" type="submit">Submit Comment</button>
                           </form>
-
                       </span>
                   </div>
                   <div>
@@ -344,21 +341,21 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
     <!-- /.container -->
 
     <!-- Footer -->
-<!--
+    <!--
     <footer class="py-5 bg-dark">
       <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Acorn Academy 2017</p>
       </div>
        /.container
     </footer>
--->
+    -->
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/popper/popper.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
-      </div>
+    </div>
          <!-- Footer -->
     <footer class="py-5 bg-dark">
       <div class="container">
@@ -366,6 +363,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
       </div>
       <!-- /.container -->
     </footer>
+      
 </body>
 </head>
 </html>
