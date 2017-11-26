@@ -280,22 +280,22 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
         <div class="col-md-5">
             <div class="thumbnail">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" data-src="https://drive.google.com/uc?export=view&id=<?php
-            echo $row['images_path'];?>" alt="" height="50%" width="50%" >
+            <img class="img-fluid rounded mb-3 mb-md-0" data-src="watermark.php?image=https://docs.google.com/uc?id=<?php echo $imgPx;?>&amp;watermark=watermark.png"  alt="" height="50%" width="50%" />
+
               <div class="caption">
                 <div id="some-div">
           <p><?php echo $first . ' ' . $last; ?></p>
-                    <span id="some-element"> 
-                          
+                    <span id="some-element">
+
                             <!-- BUTTONS: REPORT & EMAIL -->
                           <form action="/action_page.php" method="get">
                               <button type="submit" >Email</button>
                               <button type="submit" >Report</button>
                           </form>
-                          
+
                            <!-- Space -->
                           <pre class="tab"> </pre>
-                          
+
                           <!-- PLACEHOLDER COMMENTS -->
                           <p> comments </p>
                           <p> comments </p>
@@ -313,7 +313,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                       </span>
                   </div>
                   <div>
-                      <style> 
+                      <style>
                           button.commentbutton {
                               margin-top: 10px;
                           }
@@ -324,7 +324,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                               margin-top: 15px;
                               padding: 15px;
                           }
-                          
+
                           #some-div:hover #some-element {
                               display: block;
                           }
