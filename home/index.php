@@ -280,8 +280,8 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
         <div class="col-md-5">
             <div class="thumbnail">
           <a href="#">
-            
-            <img class="img-fluid rounded mb-3 mb-md-0" data-src="watermark.php?image=https://docs.google.com/uc?id=<?php echo $row['images_path'];?>&amp;watermark=watermark.png"  alt="" height="50%" width="50%" />
+
+            <img data-src="watermark.php?image=https://docs.google.com/uc?id=<?php echo $imgPx;?>&amp;watermark=watermark.png"  alt="" height="50%" width="50%" />
 
               <div class="caption">
                 <div id="some-div">
