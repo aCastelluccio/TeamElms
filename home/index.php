@@ -295,17 +295,129 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                            <!-- Space -->
                           <pre class="tab"> </pre>
 
-                          <!-- PLACEHOLDER COMMENTS -->
+                          <!-- PLACEHOLDER COMMENTS 
                           <p><u>John:</u> Great photo! </p>
                           <p><u>Karen:</u> That was a really fun school event! </p>
                           <p><u>Jennifer:</u> I'd wish you'd ask my permission before posting a photo of my child. I'll let it slide this time, but in the future, please keep my request in mind.</p>
                           <p><u>David:</u> Our kids are growing up so quickly!! </p>
-
-                          <!-- ADD A COMMENT -->
+                           -->
+                        
+                        
+                          <!-- ADD A COMMENT
                           <form action="/action_page.php" method="get">
                               <input type="text" name="lname" placeholder="write a comment..."><br>
                               <button class="commentbutton" type="submit">Submit a Comment</button>
                           </form>
+                        -->
+                        
+                        
+                        <!-- ADD A COMMENT -->
+                        <div class="warning" id="no_go"></div>
+                        <div class="commentbox-app">
+                          <div class="container">
+                            <div class="clearfix">
+                              <form id="comment-form">
+                                <input type="text" id="comment-input" class="comment-input" placeholder="Comment...">
+                                <input type="submit" value="Post" class="comment-btn">
+                              </form>
+                            </div>
+                            <p id="comment-stream" class="comment-stream"> </p>
+                            <button class="remove-all-btn" id="remove-all" type="button">Remove all</button>
+                          </div>
+                        </div>
+                        
+                        
+                        <!-- ACTUALLY ADDING A COMMENT -->
+                        <script>   
+                        function hideWarning() {
+                          document.getElementById('no_go').style.display = 'none';
+                        }
+
+                        function showWarning () {
+                          document.getElementById('no_go').style.display = 'block';
+                          document.getElementById('no_go').innerHTML = '<strong>Warning:</strong> App will not work if local storage is disabled or unsupported.';
+                          console.warn('App will not work if local storage is disabled or unsupported.');
+                        } 
+
+                        function supportsLocalStorage () {
+                          return typeof localStorage !== 'undefined';
+                        }
+
+                        function getComments() {
+                          return JSON.parse(localStorage.getItem('comments')) || [];
+                        }
+
+                        function saveComment (comments, commentStr, action) {
+                          if (!commentStr && comments.indexOf(commentStr) < 0) {
+                            action(err);
+                          }
+                          action(undefined, commentStr);
+                        }
+
+                        function appendToStream(stream, str, index) {
+                          var div = document.createElement('div');
+                          div.setAttribute('data-index', index);
+                          div.innerHTML = str;
+                          stream.appendChild(div);
+                        }
+
+                        function loadComments(stream) {
+                          var comments = getComments();
+                          if (comments) {
+                            for (var i = 0; i < comments.length; i++) {
+                              appendToStream(stream, comments[i], i);
+                            }    
+                          }
+                        }
+
+                        function clearComments(stream) {
+                          localStorage.removeItem('comments');
+                          stream.innerHTML = '';
+                        }
+
+                        if (supportsLocalStorage()) {
+                          initApp();
+                        } else {
+                          showWarning();
+                        }
+
+                        function initApp() {
+                          hideWarning();
+                          var commentForm = document.getElementById('comment-form'),
+                              commentList = document.getElementById('comment-stream'),
+                              commentInput = document.getElementById('comment-input'),
+                              removeAll = document.getElementById('remove-all');
+
+                          loadComments(commentList);
+
+                          removeAll.addEventListener('click', function() {
+                            clearComments(commentList);
+                          }, true);
+
+                          commentForm.addEventListener('submit', function (event) {
+                            event.preventDefault();
+                            var commStr = commentInput.value,
+                                comments = getComments();
+
+                            saveComment(comments, commStr, function(err, value) {
+                              if (err) {
+                                return;
+                              }
+                              comments.push(value);
+                              localStorage.setItem('comments', JSON.stringify(comments));  
+                              appendToStream(commentList, commStr);
+                              commentInput.value = '';      
+                            });
+
+                          }, true);
+                        }                         
+                        </script>
+                        
+                        
+                         
+                        
+                        
+                        
                       </span>
                   </div>
                   <div>
