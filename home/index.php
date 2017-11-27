@@ -285,16 +285,16 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                 <div id="some-div">
                 <p><?php echo $first . ' ' . $last; ?></p>
                     <span id="some-element"> 
-                          
+                        
                             <!-- BUTTONS: REPORT & EMAIL -->
                           <form method="post">
                               <button type="submit">Email <?php echo $first ?></button>
                               <button name="reportButton" type="submit">Report This Photo</button>
                           </form>
-                          
+
                            <!-- Space -->
                           <pre class="tab"> </pre>
-                          
+
                           <!-- PLACEHOLDER COMMENTS -->
                           <p> comments </p>
                           <p> comments </p>
@@ -310,7 +310,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                       </span>
                   </div>
                   <div>
-                      <style> 
+                      <style>
                           button.commentbutton {
                               margin-top: 10px;
                           }
@@ -321,7 +321,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                               margin-top: 15px;
                               padding: 15px;
                           }
-                          
+
                           #some-div:hover #some-element {
                               display: block;
                           }
