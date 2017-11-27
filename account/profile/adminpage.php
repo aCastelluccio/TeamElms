@@ -1,4 +1,22 @@
 <!DOCTYPE html>
+<?php
+
+require("../../vendor/phpauth/phpauth/Auth.php");
+include("../../vendor/phpauth/phpauth/Config.php");
+
+$dbh = new PDO("mysql:host=xq7t6tasopo9xxbs.cbetxkdyhwsb.us-east-1.rds.amazonaws.com;dbname=py6etou4vck57kfy", "d2qpf22lyarz395l", "pejiin9edn8xmt5a") or die("Can't connect to database");
+$config = new PHPAuth\Config($dbh);
+$auth   = new PHPAuth\Auth($dbh, $config);
+
+$sth = $dbh->prepare("SELECT COUNT(u.email) FROM users u JOIN user_info ui ON ui.uid = u.id WHERE ui.approved = 0 ");
+$sth->execute();
+$number_of_requests = $sth->fetchColumn(); 
+
+$sth2 = $dbh->prepare("SELECT COUNT(reported) FROM images_tbl WHERE reported = 1 ");
+$sth2->execute();
+$number_of_reports = $sth2->fetchColumn(); 
+
+?>
 <html lang="en">
 
 <head>
@@ -62,34 +80,43 @@
     </div>
   </nav>
     
-  <div class="content-wrapper">
-    <div class="container-fluid">
-      <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="#">Admin Dashboard</a>
-        </li>
-      </ol>
-      <!-- Icon Cards-->
-      <div class="row">
-        <div class="col-xl-3 col-sm-6 mb-3">
-          <div class="card text-white bg-primary o-hidden h-100">
-            <div class="card-body">
-              <div class="card-body-icon">
-                <i class="fa fa-fw fa-comments"></i>
+  <?php if ($number_of_requests !== 0) { ?>
+    
+      <div class="content-wrapper">
+        <div class="container-fluid">
+          <!-- Icon Cards-->
+          <div class="row">
+            <div class="col-xl-3 col-sm-6 mb-3">
+              <div class="card text-white bg-primary o-hidden h-100">
+                <div class="card-body">
+                  <div class="card-body-icon">
+                    <i class="fa fa-fw fa-comments"></i>
+                  </div>
+                  <div class="mr-5"><?php echo $number_of_requests; ?> Registration Request(s)</div>
+                </div>
               </div>
-              <div class="mr-5">10 Registration Requests</div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
-              <span class="float-left">View Details</span>
-              <span class="float-right">
-                <i class="fa fa-angle-right"></i>
-              </span>
-            </a>
           </div>
-        </div>
-      </div>
+            
+    <?php } ?>
+            
+    <?php if ($number_of_reports !== 0) { ?>
 
+          <div class="row">
+            <div class="col-xl-3 col-sm-6 mb-3">
+              <div class="card text-white bg-primary o-hidden h-100">
+                <div class="card-body">
+                  <div class="card-body-icon">
+                    <i class="fa fa-fw fa-comments"></i>
+                  </div>
+                  <div class="mr-5"><?php echo $number_of_reports; ?> Reported Photo(s)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+    <?php } ?>
+            
       <div class="card mb-3">
         <div class="card-header">
           <i class="fa fa-area-chart"></i> Picture Posting Activity</div>
@@ -100,63 +127,6 @@
       </div>
       <div class="row">
         <div class="col-lg-8">
-            <!-- Example Social Card-->
-            <div class="card mb-3">
-              <a href="#">
-                <img class="card-img-top img-fluid w-100" src="https://unsplash.it/700/450?image=610" alt="">
-              </a>
-              <div class="card-body">
-                <h6 class="card-title mb-1"><a href="#">David Miller</a></h6>
-                <p class="card-text small">These waves are looking pretty good today!
-                  <a href="#">#surfsup</a>
-                </p>
-              </div>
-              <hr class="my-0">
-              <div class="card-body py-2 small">
-                <a class="mr-3 d-inline-block" href="#">
-                  <i class="fa fa-fw fa-thumbs-up"></i>Like</a>
-                <a class="mr-3 d-inline-block" href="#">
-                  <i class="fa fa-fw fa-comment"></i>Comment</a>
-                <a class="d-inline-block" href="#">
-                  <i class="fa fa-fw fa-share"></i>Share</a>
-              </div>
-              <hr class="my-0">
-              <div class="card-body small bg-faded">
-                <div class="media">
-                  <img class="d-flex mr-3" src="http://placehold.it/45x45" alt="">
-                  <div class="media-body">
-                    <h6 class="mt-0 mb-1"><a href="#">John Smith</a></h6>Very nice! I wish I was there! That looks amazing!
-                    <ul class="list-inline mb-0">
-                      <li class="list-inline-item">
-                        <a href="#">Like</a>
-                      </li>
-                      <li class="list-inline-item">·</li>
-                      <li class="list-inline-item">
-                        <a href="#">Reply</a>
-                      </li>
-                    </ul>
-                    <div class="media mt-3">
-                      <a class="d-flex pr-3" href="#">
-                        <img src="http://placehold.it/45x45" alt="">
-                      </a>
-                      <div class="media-body">
-                        <h6 class="mt-0 mb-1"><a href="#">David Miller</a></h6>Next time for sure!
-                        <ul class="list-inline mb-0">
-                          <li class="list-inline-item">
-                            <a href="#">Like</a>
-                          </li>
-                          <li class="list-inline-item">·</li>
-                          <li class="list-inline-item">
-                            <a href="#">Reply</a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card-footer small text-muted">Posted 32 mins ago</div>
-            </div>
           </div>
         </div>
       </div>
