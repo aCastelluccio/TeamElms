@@ -42,7 +42,7 @@ session_start();
             
           <label>
             <input type="hidden" value="NO" id="rememberSession" name="rememberSession">
-            <input type="checkbox" value="YES" id="rememberSession" name="rememberSession"> Remember me
+            <input type="checkbox" value="YES" id="rememberSession" name="rememberSession" <?php if (isset($_SESSION['isChecked'])) { ?> checked <?php } ?>> Remember me
           </label>    
             
         </div>

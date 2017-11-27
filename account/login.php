@@ -14,9 +14,11 @@ $password = filter_var($_POST["password"], FILTER_SANITIZE_STRING);
 $checkbox = $_POST['rememberSession'];
 if ($checkbox === "YES") {
     $_SESSION['remember'] = $email;
+    $_SESSION['isChecked'] = true;
     $remember = true;
 } else {
     $_SESSION['remember'] = null;
+    $_SESSION['isChecked'] = null;
     $remember = false;
 }
 
