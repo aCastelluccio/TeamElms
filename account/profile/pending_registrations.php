@@ -8,8 +8,7 @@ $dbh = new PDO("mysql:host=xq7t6tasopo9xxbs.cbetxkdyhwsb.us-east-1.rds.amazonaws
 $config = new PHPAuth\Config($dbh);
 $auth   = new PHPAuth\Auth($dbh, $config);
 
-//change to select people from user_info that aren't approved, add to this table, and then do the rest
-$sth = $dbh->prepare("SELECT * FROM pending_registration_requests");
+$sth = $dbh->prepare("SELECT u.email, ui.first_name, ui.last_name, u.dt FROM user_info ui JOIN users u ON ui.uid = u.id WHERE ui.approved = 0 ");
 $sth->execute();
 $result = $sth->fetchAll(PDO::FETCH_ASSOC);
 
@@ -53,103 +52,57 @@ $updatedAt = date('m-d-Y H:i');
           <i class="fa fa-table"></i> Account Registration Requests</div>
         <div class="card-body">
           <div class="table-responsive">
-            <form method="post">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Request Date</th>
-                  <th>Approve?</th>
-                </tr>
-              </thead>
-              <tbody> <?php
-                while ($count1 < $arrayCount) { ?>
+            <form action="approving.php" method="post">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
                     <tr>
-                      <td><?php echo $result[$count1]['first_name'] . ' ' . $result[$count1]['last_name'] ?></td>
-                      <td><input id="cbemail<?php echo $count1 ?>" name="cbemail<?php echo $count1 ?>" value="<?php echo $result[$count1]['email'] ?>" readonly/></td>
-                      <td><?php echo $result[$count1]['dt'] ?></td>
-                      <td>
-                          <div>
-                              <label>
-                                <input type="checkbox" class="radio" id="checkbox<?php echo $count1; ?>" value="Yes" name="checkbox<?php echo $count1; ?>"/>Yes</label>
-                              <label>
-                                <input type="checkbox" class="radio" id="checkbox<?php echo $count1; ?>" value="No" name="checkbox<?php echo $count1; ?>"/>No</label>
-                          </div>
-                      </td>
-                    </tr> <?php
-                $count1 += 1;    
-                }
-                ?>
-              </tbody>
-            </table>
-                
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Request Date</th>
+                      <th>Approve?</th>
+                    </tr>
+                  </thead>
+                  <tbody> <?php
+                    while ($count1 < $arrayCount) { ?>
+                        <tr>
+                          <td><?php echo $result[$count1]['first_name'] . ' ' . $result[$count1]['last_name'] ?></td>
+                          <td><?php echo $result[$count1]['email'] ?></td>
+                          <td><?php echo $result[$count1]['dt'] ?></td>
+                          <td>
+                              <div>
+                                  <label>
+                                    <input type="checkbox" class="radio" id="checkbox[]" name="checkbox[]" value="Yes"/>Yes
+                                    <input type="hidden" id="checkbox[]" name="checkbox[]" value="<?php echo $result[$count1]['email']; ?>">
+                                  </label>
+                              </div>
+                          </td>
+                        </tr> <?php
+                    $count1 += 1;    
+                    }
+                    ?>
+                  </tbody>
+                </table>
+                <button id="confirmButton" name="confirmButton" type="submit">Confirm</button>
+            </form>    
             <script text="text/javascript">
-                var indexOf = [];
-                $("input:checkbox").on('click', function() {
+
+                $("input:checkbox[]").on('click', function() {
                   // in the handler, 'this' refers to the box clicked on
                   var $box = $(this);
                   if ($box.is(":checked")) {
                     // the name of the box is retrieved using the .attr() method
                     // as it is assumed and expected to be immutable
-                    var group = "input:checkbox[name='" + $box.attr("name") + "']";
+                    var group = "input:checkbox[name='"[ + $box.attr("name") + ]"']";
                     // the checked state of the group/box on the other hand will change
                     // and the current value is retrieved using .prop() method
                     $(group).prop("checked", false);
                     $box.prop("checked", true);
-                    indexOf.push($(this).closest('tr').index() + 1); //Solve problem where if you check a checkbox and then change                                                      it to the other option, it still adds the initially checked                                                        option
                   } else {
                     $box.prop("checked", false);
-                    indexOf.pop($(this).closest('tr').index() + 1);
                   }
                 });
-                 
-                function registerAccounts() {
-                    <?php if (isset($_POST['confirmButton'])) { ?>
-                    var cbs = [];
-                    var checkboxes = document.forms[0];
-                    var i;
-                    for (i = 0; i < checkboxes.length; i++) {
-                        if (checkboxes[i].checked) {
-                            cbs.push(checkboxes[i]);
-                        }
-                    }
-                    alert("indexOf's length: " + indexOf.length);
-                    for (var e = 0; e < indexOf.length; e++) {
-                        var temail = document.getElementById("dataTable").rows[indexOf[e]].cells[1].innerHTML;
-                        alert(temail);
-                    }
-                    
-                    var j;
-                    for (j = 0; j < cbs.length; j++) {
-                        <?php
-                        $counter = 1;
-                        $cbemailCount = 'cbemail' . $counter; //Get the specific cbemail row that's clicked -> retrieves specific email address
-                        $cbemail = $_POST[$cbemailCount]; 
-                        ?>
-                        if (cbs[j].value === "Yes") {
-                            <?php
-                            $uid = $auth->getUID($cbemail);
-                            $dbh->query("UPDATE user_info SET approved=1 WHERE uid = $uid");
-                            //$dbh->query("DELETE FROM pending_registration_requests WHERE email = '".$result[$count2]['email']."'");
-                            ?>
-                            alert("YES checkbox; <?php echo 'cbemail: ' . $counter . ', uid: ' .  $uid ?>");
-                        } else if (cbs[j].value === "No") {
-                            <?php
-                            $uid = $auth->getUID($cbemail);
-                            $dbh->query("UPDATE user_info SET approved=0 WHERE uid = $uid");
-                            //$dbh->query("DELETE FROM pending_registration_requests WHERE email = '".$result[$count2]['email']."'");
-                            ?>
-                            alert("NO checkbox; <?php echo 'cbemail: ' . $cbemail . ', uid: ' .  $uid ?>");
-                        }
-                    <?php $counter++; ?> 
-                    } 
-                    <?php } ?>
-                }
                 
             </script>
-                <button id="confirmButton" name="confirmButton" type="submit" onclick="registerAccounts();">Confirm</button>
-          </form>
           </div>
         </div>
         <div class="card-footer small text-muted">Updated <?php echo $updatedAt; ?></div>
