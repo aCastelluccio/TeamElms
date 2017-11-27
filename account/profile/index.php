@@ -10,10 +10,11 @@ $dbh = new PDO("mysql:host=xq7t6tasopo9xxbs.cbetxkdyhwsb.us-east-1.rds.amazonaws
 $config = new PHPAuth\Config($dbh);
 $auth   = new PHPAuth\Auth($dbh, $config);
 
-if (isset($_SESSION['admin']) && ($_SESSION['admin'] === true)) {
-    header('Location: ./adminpage.php');
-    exit();
-}
+if (isset($_SESSION['admin']) && ($_SESSION['admin'] === true)) { ?>
+    <script>
+        window.location.href = "./adminpage.php";
+    </script>
+<?php }
 
 $sth = $dbh->prepare("SELECT u.email, ui.first_name, ui.last_name FROM user_info ui JOIN users u ON ui.uid = u.id WHERE ui.approved = 1 ");
 $sth->execute();

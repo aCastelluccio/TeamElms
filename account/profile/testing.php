@@ -104,51 +104,25 @@ $updatedAt = date('m-d-Y H:i');
                   }
                 });
                  
-                function registerAccounts() {
-                    <?php if (isset($_POST['confirmButton'])) { ?>
-                    var cbs = [];
-                    var checkboxes = document.forms[0];
-                    var i;
-                    for (i = 0; i < checkboxes.length; i++) {
-                        if (checkboxes[i].checked) {
-                            cbs.push(checkboxes[i]);
+               function test() {
+                    <?php 
+                        $dom = new DOMDocument();
+                        $dom->load("testing.php");
+                        $divs = $dom->getElementsByTagName('td'); ?>
+                        alert("<?php var_dump($divs); ?>");
+                        <?php 
+                        foreach ($divs as $div) {
+                            foreach ($div->attributes as $attr) {
+                              $name = $attr->nodeName;
+                              $value = $attr->nodeValue; ?>
+                              alert("<?php echo "Attribute " . " "  ?>");
+                            <?php }
                         }
-                    }
-                    alert("indexOf's length: " + indexOf.length);
-                    for (var e = 0; e < indexOf.length; e++) {
-                        var temail = document.getElementById("dataTable").rows[indexOf[e]].cells[1].innerHTML;
-                        alert(temail);
-                    }
-                    
-                    var j;
-                    for (j = 0; j < cbs.length; j++) {
-                        <?php
-                        $counter = 1;
-                        $cbemailCount = 'cbemail' . $counter; //Get the specific cbemail row that's clicked -> retrieves specific email address
-                        $cbemail = $_POST[$cbemailCount]; 
-                        ?>
-                        if (cbs[j].value === "Yes") {
-                            <?php
-                            $uid = $auth->getUID($cbemail);
-                            $dbh->query("UPDATE user_info SET approved=1 WHERE uid = $uid");
-                            //$dbh->query("DELETE FROM pending_registration_requests WHERE email = '".$result[$count2]['email']."'");
-                            ?>
-                            alert("YES checkbox; <?php echo 'cbemail: ' . $counter . ', uid: ' .  $uid ?>");
-                        } else if (cbs[j].value === "No") {
-                            <?php
-                            $uid = $auth->getUID($cbemail);
-                            $dbh->query("UPDATE user_info SET approved=0 WHERE uid = $uid");
-                            //$dbh->query("DELETE FROM pending_registration_requests WHERE email = '".$result[$count2]['email']."'");
-                            ?>
-                            alert("NO checkbox; <?php echo 'cbemail: ' . $cbemail . ', uid: ' .  $uid ?>");
-                        }
-                    <?php $counter++; ?> 
-                    } 
-                    <?php } ?>
+                    ?>
                 }
                 
             </script>
-                <button id="confirmButton" name="confirmButton" type="submit" onclick="registerAccounts();">Confirm</button>
+                <button id="confirmButton" name="confirmButton" type="submit" onclick="test();">Confirm</button>
           </form>
           </div>
         </div>
