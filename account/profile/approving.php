@@ -9,6 +9,11 @@ $auth   = new PHPAuth\Auth($dbh, $config);
 
 $items = $_POST['checkbox'];
 
+if (!isset($items)) {
+    header('Location: ./pending_registrations.php');
+    exit();
+}
+
 for ($i = 0;  $i < count($items); $i++) {
     if ($items[$i] === "Yes") {
         $email = $items[$i+1];
@@ -17,7 +22,7 @@ for ($i = 0;  $i < count($items); $i++) {
     }
 }
 
-header('Location: ./testing.php');
+header('Location: ./pending_registrations.php');
 exit()
 
 ?>
