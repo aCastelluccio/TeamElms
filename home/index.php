@@ -296,16 +296,15 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                           <pre class="tab"> </pre>
 
                           <!-- PLACEHOLDER COMMENTS -->
-                          <p> comments </p>
-                          <p> comments </p>
-                          <p> comments </p>
-                          <p> comments </p>
-                          <p> comments </p>
+                          <p><u>John:</u> Great photo! </p>
+                          <p><u>Karen:</u> That was a really fun school event! </p>
+                          <p><u>Jennifer:</u> I'd wish you'd ask my permission before posting a photo of my child. I'll let it slide this time, but in the future, please keep my request in mind.</p>
+                          <p><u>David:</u> Our kids are growing up so quickly!! </p>
 
                           <!-- ADD A COMMENT -->
                           <form action="/action_page.php" method="get">
                               <input type="text" name="lname" placeholder="write a comment..."><br>
-                              <button class="commentbutton" type="submit">Submit Comment</button>
+                              <button class="commentbutton" type="submit">Submit a Comment</button>
                           </form>
                       </span>
                   </div>
@@ -324,6 +323,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
                           #some-div:hover #some-element {
                               display: block;
+                              margin-bottom: 15px;
                           }
                       </style>
                   </div>
