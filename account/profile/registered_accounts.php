@@ -10,11 +10,11 @@ $auth   = new PHPAuth\Auth($dbh, $config);
 
 $sth = $dbh->prepare("SELECT u.email, ui.first_name, ui.last_name FROM user_info ui JOIN users u ON ui.uid = u.id WHERE ui.approved = 1 ");
 $sth->execute();
-$result1 = $sth->fetchAll(PDO::FETCH_ASSOC);
+$result = $sth->fetchAll(PDO::FETCH_ASSOC);
 
-$arrayCount = count($result1);
-$count1 = 0;
-$updatedAt = date('m-d-Y H:i');
+$arrayCount = count($result);
+$count = 0;
+$updatedAt = date('h:i a');
 
 ?>
 <html lang="en">
@@ -52,34 +52,45 @@ $updatedAt = date('m-d-Y H:i');
           <i class="fa fa-table"></i> Registered Accounts</div>
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                </tr>
-              </thead>
-              <tbody> <?php
-                while ($count1 < $arrayCount) { ?>
+            <form action="deleting_accounts.php" method="post">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
                     <tr>
-                      <td><?php echo $result1[$count1]['first_name'] . ' ' . $result1[$count1]['last_name']; ?></td>
-                      <td ><?php echo $result1[$count1]['email']; ?></td>
-                    </tr> <?php
-                $count1 += 1;    
-                }
-                ?>
-              </tbody>
-            </table>
-                
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Delete Account?</th>
+                    </tr>
+                  </thead>
+                  <tbody> <?php
+                    while ($count < $arrayCount) { ?>
+                        <tr>
+                          <td><?php echo $result[$count]['first_name'] . ' ' . $result[$count]['last_name']; ?></td>
+                          <td><?php echo $result[$count]['email']; ?></td>
+                          <td>
+                              <div>
+                                  <label>
+                                    <input type="checkbox" class="radio" id="checkbox[]" name="checkbox[]" value="Yes"/>Yes
+                                    <input type="hidden" id="checkbox[]" name="checkbox[]" value="<?php echo $result[$count]['email']; ?>">
+                                  </label>
+                              </div>
+                          </td>
+                        </tr> <?php
+                    $count += 1;    
+                    }
+                    ?>
+                  </tbody>
+                </table>
+                <button id="confirmButton" name="confirmButton" type="submit">Confirm</button>
+            </form>   
             <script text="text/javascript">
-                alert("<?php var_dump($result1); ?>");
-                $("input:checkbox").on('click', function() {
+
+                $("input:checkbox[]").on('click', function() {
                   // in the handler, 'this' refers to the box clicked on
                   var $box = $(this);
                   if ($box.is(":checked")) {
                     // the name of the box is retrieved using the .attr() method
                     // as it is assumed and expected to be immutable
-                    var group = "input:checkbox[name='" + $box.attr("name") + "']";
+                    var group = "input:checkbox[name='"[ + $box.attr("name") + ]"']";
                     // the checked state of the group/box on the other hand will change
                     // and the current value is retrieved using .prop() method
                     $(group).prop("checked", false);
@@ -88,10 +99,11 @@ $updatedAt = date('m-d-Y H:i');
                     $box.prop("checked", false);
                   }
                 });
+                
             </script>
           </div>
         </div>
-        <div class="card-footer small text-muted">Updated <?php echo $updatedAt; ?></div>
+        <div class="card-footer small text-muted">Updated at <?php echo $updatedAt; ?></div>
       </div>
     
     <!-- Bootstrap core JavaScript-->

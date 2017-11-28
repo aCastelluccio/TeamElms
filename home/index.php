@@ -143,7 +143,8 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
               mysqli_query($link, $query_upload) or die("Error: #1");
             }
           }
-          $result = mysqli_query($link, $query) or die("error in $query == ----> ".mysqli_error());
+            
+          $result = mysqli_query($link, $query);
 
           while($row = mysqli_fetch_array($result)){
             $found = false;
@@ -268,6 +269,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
           $first = $firstResult->fetch_assoc()['first_name'];
           $last = $lastResult->fetch_assoc()['last_name'];
 
+
     ?>
 
           <!-- for adding pages, add a counter: when hits certain num, point to next page -->
@@ -279,8 +281,9 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
         <div class="col-md-5">
             <div class="thumbnail">
           <a>
-            <img name="photoToReport" class="img-fluid rounded mb-3 mb-md-0" data-src="https://drive.google.com/uc?export=view&id=<?php
-            echo $row['images_path'];?>" alt="" height="50%" width="50%" >
+            <script>
+            </script>
+            <img class="img-fluid rounded mb-3 mb-md-0" data-src="https://drive.google.com/uc?export=view&id=<?php echo $row['images_path']; ?>" height="50%" width="50%" >
               <div class="caption">
                 <div id="some-div">
                 <p><?php echo $first . ' ' . $last; ?></p>
@@ -294,22 +297,6 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
                            <!-- Space -->
                           <pre class="tab"> </pre>
-
-                          <!-- PLACEHOLDER COMMENTS 
-                          <p><u>John:</u> Great photo! </p>
-                          <p><u>Karen:</u> That was a really fun school event! </p>
-                          <p><u>Jennifer:</u> I'd wish you'd ask my permission before posting a photo of my child. I'll let it slide this time, but in the future, please keep my request in mind.</p>
-                          <p><u>David:</u> Our kids are growing up so quickly!! </p>
-                           -->
-                        
-                        
-                          <!-- ADD A COMMENT
-                          <form action="/action_page.php" method="get">
-                              <input type="text" name="lname" placeholder="write a comment..."><br>
-                              <button class="commentbutton" type="submit">Submit a Comment</button>
-                          </form>
-                        -->
-                        
                         
                         <!-- ADD A COMMENT -->
                         <div class="warning" id="no_go"></div>
@@ -412,12 +399,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                           }, true);
                         }                         
                         </script>
-                        
-                        
-                         
-                        
-                        
-                        
+                    
                       </span>
                   </div>
                   <div>
@@ -451,17 +433,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
     </div>
 
     <!-- /.container -->
-
-    <!-- Footer -->
-    <!--
-    <footer class="py-5 bg-dark">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Acorn Academy 2017</p>
-      </div>
-       /.container
-    </footer>
-    -->
-
+        
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/popper/popper.min.js"></script>

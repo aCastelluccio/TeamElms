@@ -14,7 +14,7 @@ $result = $sth->fetchAll(PDO::FETCH_ASSOC);
 
 $arrayCount = count($result);
 $count1 = 0;
-$updatedAt = date('m-d-Y H:i');
+$updatedAt = date('h:i a');
 
 ?>
 <html lang="en">
@@ -52,7 +52,7 @@ $updatedAt = date('m-d-Y H:i');
           <i class="fa fa-table"></i> Reported Photos</div>
         <div class="card-body">
           <div class="table-responsive">
-            <form action="" method="post">
+            <form action="./deleting_reported_photos.php" method="post">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
@@ -71,9 +71,9 @@ $updatedAt = date('m-d-Y H:i');
                       <td>
                           <div>
                               <label>
-                                <input type="checkbox" class="radio" id="checkbox<?php echo $count1; ?>" value="Yes" name="checkbox<?php echo $count1; ?>"/>Yes</label>
-                              <label>
-                                <input type="checkbox" class="radio" id="checkbox<?php echo $count1; ?>" value="No" name="checkbox<?php echo $count1; ?>"/>No</label>
+                                <input type="checkbox" class="radio" id="checkbox[]" name="checkbox[]" value="Yes"/>Yes
+                                <input type="hidden" class="radio" id="checkbox[]" name="checkbox[]" value=""/>
+                              </label>
                           </div>
                       </td>
                   </tr> <?php
@@ -82,15 +82,18 @@ $updatedAt = date('m-d-Y H:i');
                 ?>
               </tbody>
             </table>
-            
+            <button id="confirmButton" name="confirmButton" type="submit">Confirm</button>
+            </form>
+              
             <script text="text/javascript">
-                $("input:checkbox").on('click', function() {
+
+                $("input:checkbox[]").on('click', function() {
                   // in the handler, 'this' refers to the box clicked on
                   var $box = $(this);
                   if ($box.is(":checked")) {
                     // the name of the box is retrieved using the .attr() method
                     // as it is assumed and expected to be immutable
-                    var group = "input:checkbox[name='" + $box.attr("name") + "']";
+                    var group = "input:checkbox[name='"[ + $box.attr("name") + ]"']";
                     // the checked state of the group/box on the other hand will change
                     // and the current value is retrieved using .prop() method
                     $(group).prop("checked", false);
@@ -99,12 +102,12 @@ $updatedAt = date('m-d-Y H:i');
                     $box.prop("checked", false);
                   }
                 });
+                
             </script>
-            <button id="confirmButton" name="confirmButton" type="submit" onclick="registerAccounts();">Confirm</button>
-            </form>
+            
           </div>
         </div>
-        <div class="card-footer small text-muted">Updated <?php echo $updatedAt; ?></div>
+        <div class="card-footer small text-muted">Updated at <?php echo $updatedAt; ?></div>
       </div>
     
     <!-- Bootstrap core JavaScript-->

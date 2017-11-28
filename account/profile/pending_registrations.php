@@ -14,7 +14,7 @@ $result = $sth->fetchAll(PDO::FETCH_ASSOC);
 
 $arrayCount = count($result);
 $count1 = 0;
-$updatedAt = date('m-d-Y H:i');
+$updatedAt = date('h:i a');
 
 ?>
 <html lang="en">
@@ -34,7 +34,6 @@ $updatedAt = date('m-d-Y H:i');
   <link href="../../_layout/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="../../_layout/css/sb-admin.css" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -67,7 +66,10 @@ $updatedAt = date('m-d-Y H:i');
                         <tr>
                           <td><?php echo $result[$count1]['first_name'] . ' ' . $result[$count1]['last_name'] ?></td>
                           <td><?php echo $result[$count1]['email'] ?></td>
-                          <td><?php echo $result[$count1]['dt'] ?></td>
+                          <td><?php 
+                            $date = date_create($result[$count1]['dt']);
+                            echo date_format($date, 'm-d-Y') . ' ' . date_format($date, 'h:i a');
+                          ?></td>
                           <td>
                               <div>
                                   <label>
@@ -105,7 +107,7 @@ $updatedAt = date('m-d-Y H:i');
             </script>
           </div>
         </div>
-        <div class="card-footer small text-muted">Updated <?php echo $updatedAt; ?></div>
+        <div class="card-footer small text-muted">Updated at <?php echo $updatedAt; ?></div>
       </div>
     
     <!-- Bootstrap core JavaScript-->

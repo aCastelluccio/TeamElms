@@ -16,6 +16,8 @@ $sth2 = $dbh->prepare("SELECT COUNT(reported) FROM images_tbl WHERE reported = 1
 $sth2->execute();
 $number_of_reports = $sth2->fetchColumn(); 
 
+$updatedAt = date('h:i a');
+
 ?>
 <html lang="en">
 
@@ -123,7 +125,7 @@ $number_of_reports = $sth2->fetchColumn();
         <div class="card-body">
           <canvas id="myAreaChart" width="100%" height="30"></canvas>
         </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        <div class="card-footer small text-muted">Updated at <?php echo $updatedAt ?></div>
       </div>
       <div class="row">
         <div class="col-lg-8">
