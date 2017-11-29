@@ -58,7 +58,7 @@ $updatedAt = date('h:i a');
                       <th>Name</th>
                       <th>Email</th>
                       <th>Request Date</th>
-                      <th>Approve?</th>
+                      <th>Approve?<input type="checkbox" onchange="checkAll(this)"/><small>Select All</small></th>
                     </tr>
                   </thead>
                   <tbody> <?php

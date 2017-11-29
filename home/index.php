@@ -228,16 +228,6 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
           <?php } 
         }
-          
-        function reportPhoto() {
-            $reportButton = $_POST['reportButton'];
-            $photo = $_POST['photoToReport'];
-            
-            if (isset($reportButton)) {
-                $sth = $dbh->prepare("UPDATE images_tbl SET reported=1 WHERE images_path = $photo");
-                $sth->execute();
-            }
-        }
 
       ?>
 
@@ -283,7 +273,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
           <a>
             <script>
             </script>
-            <img class="img-fluid rounded mb-3 mb-md-0" data-src="https://drive.google.com/uc?export=view&id=<?php echo $row['images_path']; ?>" height="50%" width="50%" >
+            <img name="picture" class="img-fluid rounded mb-3 mb-md-0" data-src="https://drive.google.com/uc?export=view&id=<?php echo $row['images_path']; ?>" height="50%" width="50%" >
               <div class="caption">
                 <div id="some-div">
                 <p><?php echo $first . ' ' . $last; ?></p>
@@ -292,7 +282,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                             <!-- BUTTONS: REPORT & EMAIL -->
                           <form method="post">
                               <button type="submit">Email <?php echo $first ?></button>
-                              <button name="reportButton" type="submit">Report This Photo</button>
+                              <button name="reportButton" type="submit" onClick="reportPhoto();">Report This Photo</button>
                           </form>
 
                            <!-- Space -->
@@ -316,6 +306,15 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                         
                         <!-- ACTUALLY ADDING A COMMENT -->
                         <script>   
+                        
+                        function reportPhoto() {
+                            alert("<?php echo $row['images_path']; ?>");
+                            <?php
+                            $picture = $row['images_path'];
+                            $success = $dbh->query("UPDATE images_tbl SET reported=1 WHERE images_path = $picture");
+                            ?>
+                        }
+                            
                         function hideWarning() {
                           document.getElementById('no_go').style.display = 'none';
                         }

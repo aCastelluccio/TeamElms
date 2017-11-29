@@ -65,6 +65,9 @@ $updatedAt = date('h:i a');
             <li>
               <a href="./pending_registrations.php">Pending Registrations</a>
             </li>
+            <li>
+              <a href="./set_admin_account.php">Set an Account to Admin</a>
+            </li>
           </ul>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components2">

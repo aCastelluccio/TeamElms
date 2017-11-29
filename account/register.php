@@ -43,8 +43,6 @@ if (!$register['error']) {
     $uid = $auth->getUID($email);
     $dbh->query("INSERT INTO user_info(uid, first_name, last_name) VALUES('".$uid."','".$params['first_name']."','".$params['last_name']."')");
     
-    $dbh->query("INSERT INTO pending_registration_requests(email, first_name, last_name) VALUES('".$registerParams['email']."','".$params['first_name']."','".$params['last_name']."' )");
-    
     header('Location: ./');
     exit();
 

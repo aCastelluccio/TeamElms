@@ -8,7 +8,7 @@ $dbh = new PDO("mysql:host=xq7t6tasopo9xxbs.cbetxkdyhwsb.us-east-1.rds.amazonaws
 $config = new PHPAuth\Config($dbh);
 $auth   = new PHPAuth\Auth($dbh, $config);
 
-$sth = $dbh->prepare("SELECT u.email, ui.first_name, ui.last_name FROM user_info ui JOIN users u ON ui.uid = u.id WHERE ui.approved = 1 ");
+$sth = $dbh->prepare("SELECT u.email, ui.first_name, ui.last_name, ui.isAdmin FROM user_info ui JOIN users u ON ui.uid = u.id WHERE ui.approved = 1 ");
 $sth->execute();
 $result = $sth->fetchAll(PDO::FETCH_ASSOC);
 
@@ -34,6 +34,7 @@ $updatedAt = date('h:i a');
   <link href="../../_layout/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="../../_layout/css/sb-admin.css" rel="stylesheet">
+<!--  <link href="../../_layout/testcss.css" rel="stylesheet">-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 
@@ -56,15 +57,15 @@ $updatedAt = date('h:i a');
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>Name</th>
+                      <th>Name <small>* indicates an admin account</small></th>
                       <th>Email</th>
-                      <th>Delete Account?</th>
+                      <th>Delete Account?<input type="checkbox" onchange="checkAll(this)"/><small>Select All</small></th>
                     </tr>
                   </thead>
                   <tbody> <?php
                     while ($count < $arrayCount) { ?>
                         <tr>
-                          <td><?php echo $result[$count]['first_name'] . ' ' . $result[$count]['last_name']; ?></td>
+                          <td><?php echo $result[$count]['first_name'] . ' ' . $result[$count]['last_name']; if ($result[$count]['isAdmin']) { echo ' *'; } ?></td>
                           <td><?php echo $result[$count]['email']; ?></td>
                           <td>
                               <div>
@@ -99,6 +100,24 @@ $updatedAt = date('h:i a');
                     $box.prop("checked", false);
                   }
                 });
+                                                        
+                function checkAll(ele) {
+                     var checkboxes = document.getElementsByTagName('input');
+                     if (ele.checked) {
+                         for (var i = 0; i < checkboxes.length; i++) {
+                             if (checkboxes[i].type == 'checkbox') {
+                                 checkboxes[i].checked = true;
+                             }
+                         }
+                     } else {
+                         for (var i = 0; i < checkboxes.length; i++) {
+                             console.log(i)
+                             if (checkboxes[i].type == 'checkbox') {
+                                 checkboxes[i].checked = false;
+                             }
+                         }
+                     }
+                 }
                 
             </script>
           </div>
