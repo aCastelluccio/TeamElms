@@ -21,7 +21,8 @@ if ($logout) {
     
 } else {
     
-    echo "You were unable to successfully logout. Confirm whether you were recently logged in; if you were not, then you cannot logout.";
+    header('Location: ./');
+    exit();
     
 }
 
