@@ -41,7 +41,7 @@ if ($result['approved'] === "1") {
         $sth->execute();
         $admin = $sth->fetch(PDO::FETCH_ASSOC)['isAdmin'];
 
-        if ($admin === 1) {
+        if ($admin === '1') {
             $_SESSION['admin'] = true;
         } else {
             $_SESSION['admin'] = false;
