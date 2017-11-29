@@ -36,8 +36,12 @@ if ($result['approved'] === "1") {
 
         $_SESSION['active_session'] = true;
         $_SESSION['email'] = $email;
+        
+        $sth = $dbh->prepare("SELECT isAdmin FROM user_info WHERE uid = $uid");
+        $sth->execute();
+        $admin = $sth->fetch(PDO::FETCH_ASSOC)['isAdmin'];
 
-        if ($email === 'admin@drew.edu') {
+        if ($admin === 1) {
             $_SESSION['admin'] = true;
         } else {
             $_SESSION['admin'] = false;
