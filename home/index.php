@@ -61,6 +61,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
         div {
             padding-top: 10px;
             margin: 0 auto;
+
         }
  
         div.transbox {
@@ -90,9 +91,47 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
         .many p {
             margin-top: -50px;
         }
-
         
+        .thumbnail img {
+            background:transparent;
+            padding:14px;
+            border:2px solid #999999;
+        }
+        
+      /* Create four equal columns that floats next to each other */
+        .column {
+            float: left;
+            width: 25%;
+            padding: 10px;
+        }
+
+        .col-md-5 img {
+            margin-top: 12px;
+            width: 100%;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive layout - makes a two column-layout instead of four columns */
+        @media (max-width: 800px) {
+            .column {
+                width: 50%;
+            }
+        }
+
+        /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+        @media (max-width: 600px) {
+            .column {
+                width: 100%;
+           }
+        }
   </style> 
+      
       
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -341,167 +380,167 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
             
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/10.3.5/lazyload.min.js"></script>
   <script text="text/javascript"> var myLazyLoad = new LazyLoad(); </script>
-      <div class="row">
-        <div class="col-md-5">
-            <div class="thumbnail">
-          <a>
-            <script>
-            </script>
-            <img name="picture" class="img-fluid rounded mb-3 mb-md-0" data-src="https://drive.google.com/uc?export=view&id=<?php echo $row['images_path']; ?>" height="50%" width="50%" >
-              <div class="caption">
-                <div id="some-div">
-                <p><?php echo $first . ' ' . $last; ?></p>
-                    <span id="some-element"> 
-                        
-                            <!-- BUTTONS: REPORT & EMAIL -->
-                          <form method="post">
-                              <button type="submit">Email <?php echo $first ?></button>
-                              <button name="reportButton" type="submit" onClick="reportPhoto();">Report This Photo</button>
-                          </form>
-  
-                        
-                           <!-- Space -->
-                          <pre class="tab"> </pre>
-                        
-                        <!-- ADD A COMMENT -->
-                        <div class="warning" id="no_go"></div>
-                        <div class="commentbox-app">
-                          <div class="container">
-                            <div class="clearfix">
-                              <form id="comment-form">
-                                <input type="text" id="comment-input" class="comment-input" placeholder="Comment...">
-                                <input type="submit" value="Post" class="comment-btn">
-                              </form>
-                            </div>
-                            <p id="comment-stream" class="comment-stream"> </p>
-                            <button class="remove-all-btn" id="remove-all" type="button">Remove all</button>
+   
+            <!-- Adds The Images -->
+              <div class="row">
+                <div class="col-md-5">
+                    <div class="thumbnail">
+                  <a>
+                    <img name="picture" class="img-fluid rounded mb-3 mb-md-0" data-src="https://drive.google.com/uc?export=view&id=<?php echo $row['images_path']; ?>" height="50%" width="50%" >              
+                      <div class="caption">
+                        <div id="some-div">
+                        <p><?php echo $first . ' ' . $last; ?></p>
+                            <span id="some-element"> 
+
+                                    <!-- BUTTONS: REPORT & EMAIL -->
+                                  <form method="post">
+                                      <button type="submit">Email <?php echo $first ?></button>
+                                      <button name="reportButton" type="submit" onClick="reportPhoto();">Report This Photo</button>
+                                  </form>
+
+
+                                   <!-- Space -->
+                                  <pre class="tab"> </pre>
+
+                                <!-- ADD A COMMENT -->
+                                <div class="warning" id="no_go"></div>
+                                <div class="commentbox-app">
+                                  <div class="container">
+                                    <div class="clearfix">
+                                      <form id="comment-form">
+                                        <input type="text" id="comment-input" class="comment-input" placeholder="Comment...">
+                                        <input type="submit" value="Post" class="comment-btn">
+                                      </form>
+                                    </div>
+                                    <p id="comment-stream" class="comment-stream"> </p>
+                                    <button class="remove-all-btn" id="remove-all" type="button">Remove all</button>
+                                  </div>
+                                </div>
+
+
+                                <!-- ACTUALLY ADDING A COMMENT -->
+                                <script>   
+
+                                function reportPhoto() {
+                                    alert("<?php echo $row['images_path']; ?>");
+                                    <?php
+                                    $picture = $row['images_path'];
+                                    $success = $dbh->query("UPDATE images_tbl SET reported=1 WHERE images_path = $picture");
+                                    ?>
+                                }
+
+                                function hideWarning() {
+                                  document.getElementById('no_go').style.display = 'none';
+                                }
+
+                                function showWarning () {
+                                  document.getElementById('no_go').style.display = 'block';
+                                  document.getElementById('no_go').innerHTML = '<strong>Warning:</strong> App will not work if local storage is disabled or unsupported.';
+                                  console.warn('App will not work if local storage is disabled or unsupported.');
+                                } 
+
+                                function supportsLocalStorage () {
+                                  return typeof localStorage !== 'undefined';
+                                }
+
+                                function getComments() {
+                                  return JSON.parse(localStorage.getItem('comments')) || [];
+                                }
+
+                                function saveComment (comments, commentStr, action) {
+                                  if (!commentStr && comments.indexOf(commentStr) < 0) {
+                                    action(err);
+                                  }
+                                  action(undefined, commentStr);
+                                }
+
+                                function appendToStream(stream, str, index) {
+                                  var div = document.createElement('div');
+                                  div.setAttribute('data-index', index);
+                                  div.innerHTML = str;
+                                  stream.appendChild(div);
+                                }
+
+                                function loadComments(stream) {
+                                  var comments = getComments();
+                                  if (comments) {
+                                    for (var i = 0; i < comments.length; i++) {
+                                      appendToStream(stream, comments[i], i);
+                                    }    
+                                  }
+                                }
+
+                                function clearComments(stream) {
+                                  localStorage.removeItem('comments');
+                                  stream.innerHTML = '';
+                                }
+
+                                if (supportsLocalStorage()) {
+                                  initApp();
+                                } else {
+                                  showWarning();
+                                }
+
+                                function initApp() {
+                                  hideWarning();
+                                  var commentForm = document.getElementById('comment-form'),
+                                      commentList = document.getElementById('comment-stream'),
+                                      commentInput = document.getElementById('comment-input'),
+                                      removeAll = document.getElementById('remove-all');
+
+                                  loadComments(commentList);
+
+                                  removeAll.addEventListener('click', function() {
+                                    clearComments(commentList);
+                                  }, true);
+
+                                  commentForm.addEventListener('submit', function (event) {
+                                    event.preventDefault();
+                                    var commStr = commentInput.value,
+                                        comments = getComments();
+
+                                    saveComment(comments, commStr, function(err, value) {
+                                      if (err) {
+                                        return;
+                                      }
+                                      comments.push(value);
+                                      localStorage.setItem('comments', JSON.stringify(comments));  
+                                      appendToStream(commentList, commStr);
+                                      commentInput.value = '';      
+                                    });
+
+                                  }, true);
+                                }                         
+                                </script>
+
+                              </span>
                           </div>
-                        </div>
-                        
-                        
-                        <!-- ACTUALLY ADDING A COMMENT -->
-                        <script>   
-                        
-                        function reportPhoto() {
-                            alert("<?php echo $row['images_path']; ?>");
-                            <?php
-                            $picture = $row['images_path'];
-                            $success = $dbh->query("UPDATE images_tbl SET reported=1 WHERE images_path = $picture");
-                            ?>
-                        }
-                            
-                        function hideWarning() {
-                          document.getElementById('no_go').style.display = 'none';
-                        }
+                          <div>
+                              <style>
+                                  button.commentbutton {
+                                      margin-top: 10px;
+                                  }
+                                  #some-element {
+                                      border: 1px solid #ccc;
+                                      display: none;
+                                      font-size: 15px;
+                                      margin-top: 15px;
+                                      padding: 15px;
+                                  }
 
-                        function showWarning () {
-                          document.getElementById('no_go').style.display = 'block';
-                          document.getElementById('no_go').innerHTML = '<strong>Warning:</strong> App will not work if local storage is disabled or unsupported.';
-                          console.warn('App will not work if local storage is disabled or unsupported.');
-                        } 
+                                  #some-div:hover #some-element {
+                                      display: block;
+                                      margin-bottom: 15px;
+                                  }
+                              </style>
+                          </div>
+                      </div>
+                  </a>
 
-                        function supportsLocalStorage () {
-                          return typeof localStorage !== 'undefined';
-                        }
-
-                        function getComments() {
-                          return JSON.parse(localStorage.getItem('comments')) || [];
-                        }
-
-                        function saveComment (comments, commentStr, action) {
-                          if (!commentStr && comments.indexOf(commentStr) < 0) {
-                            action(err);
-                          }
-                          action(undefined, commentStr);
-                        }
-
-                        function appendToStream(stream, str, index) {
-                          var div = document.createElement('div');
-                          div.setAttribute('data-index', index);
-                          div.innerHTML = str;
-                          stream.appendChild(div);
-                        }
-
-                        function loadComments(stream) {
-                          var comments = getComments();
-                          if (comments) {
-                            for (var i = 0; i < comments.length; i++) {
-                              appendToStream(stream, comments[i], i);
-                            }    
-                          }
-                        }
-
-                        function clearComments(stream) {
-                          localStorage.removeItem('comments');
-                          stream.innerHTML = '';
-                        }
-
-                        if (supportsLocalStorage()) {
-                          initApp();
-                        } else {
-                          showWarning();
-                        }
-
-                        function initApp() {
-                          hideWarning();
-                          var commentForm = document.getElementById('comment-form'),
-                              commentList = document.getElementById('comment-stream'),
-                              commentInput = document.getElementById('comment-input'),
-                              removeAll = document.getElementById('remove-all');
-
-                          loadComments(commentList);
-
-                          removeAll.addEventListener('click', function() {
-                            clearComments(commentList);
-                          }, true);
-
-                          commentForm.addEventListener('submit', function (event) {
-                            event.preventDefault();
-                            var commStr = commentInput.value,
-                                comments = getComments();
-
-                            saveComment(comments, commStr, function(err, value) {
-                              if (err) {
-                                return;
-                              }
-                              comments.push(value);
-                              localStorage.setItem('comments', JSON.stringify(comments));  
-                              appendToStream(commentList, commStr);
-                              commentInput.value = '';      
-                            });
-
-                          }, true);
-                        }                         
-                        </script>
-                    
-                      </span>
-                  </div>
-                  <div>
-                      <style>
-                          button.commentbutton {
-                              margin-top: 10px;
-                          }
-                          #some-element {
-                              border: 1px solid #ccc;
-                              display: none;
-                              font-size: 15px;
-                              margin-top: 15px;
-                              padding: 15px;
-                          }
-
-                          #some-div:hover #some-element {
-                              display: block;
-                              margin-bottom: 15px;
-                          }
-                      </style>
-                  </div>
+                </div>
               </div>
-          </a>
-
-        </div>
-      </div>
-          <br>
-          </div>
+                  <br>
+                  </div>
         <?php } ?>
 
     </div>
