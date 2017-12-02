@@ -22,10 +22,8 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Acorn Academy</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css'>
 
   <head>
@@ -35,26 +33,67 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
     <!-- CSS -->
     <style>
+        
+        @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
 
-       body {
-      padding-top: 70px;
-      font-family: 'Dekko';
-      }
+        body {
+            padding-top: 70px;
+            background: #f2f2f2;
+            font-family: Lato;
+        }
+        
+        h1, h2 { 
+            font-size: 33px;
+            color: white;
+            padding-top: 10px;
+            padding-right: 5px;
+        }
+        
+        .starter-template {
+            padding: 5px 5px;
+            text-align: center;
+        }
+        
+        .pagination {
+            margin-bottom: 5px;
+        }
+        
+        div {
+            padding-top: 10px;
+            margin: 0 auto;
+        }
+ 
+        div.transbox {
+            margin-left: 250px;
+            height: 150px;
+            width: 600px;
+            background-color: #e6e6e6;
+            border: 2px dashed black;
+        }
+        
+        .image-upload > input {
+            display: none;
+        }
 
-      h1 { font-size: 80px; }
-      h2 { font-size: 30px; }
+        .image-upload img {
+            width: 50px;
+            cursor: pointer;
+            margin-right: 100px;
+            margin-top: 20px;
+        }
+        
+        .button img {
+            margin-right: -100px;
+            margin-top: -120px;
+        }
+        
+        .many p {
+            margin-top: -50px;
+        }
 
-      .starter-template {
-      padding: 5px 5px;
-      text-align: center;
-      }
-
-      .pagination {
-        margin-bottom: 5px;
-      }
-
-  </style>
-
+        
+  </style> 
+      
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="home_page">
@@ -67,57 +106,97 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
     <link href="css/1-col-portfolio.css" rel="stylesheet">
 
   </head>
-
+    
   <body>
+    <!-- Navigation -->      
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+          <div class="container">
+              
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              
+              <h1>Acorn</h1>
+              <h2>Academy</h2>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="./">Home
-                <span class="sr-only"></span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./about/">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./favorites/">Favorites</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../account/profile/">Profile</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../account/logout.php">Logout</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item active">
+                  <a class="nav-link" href="./">Home
+                    <span class="sr-only"></span>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="./about/">About</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="./favorites/">Favorites</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../account/profile/">Profile</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../account/logout.php">Logout</a>
+                </li>
+                
+                </ul>
+              </div>
+          </div>
+      </nav>
 
     <!-- Page Content -->
     <div class="container">
+        
+        <!-- Space -->
+        <pre class="tab"> </pre>
 
-      <!-- Page Heading -->
-      <div style = "text-align: center" >
-      <h1 class="my-4">Acorn Academy</h1>
+        <!-- Page Heading -->
+        <div style = "text-align: center" >
+ 
+            <div class="background">
+                
+                <!-- Background Box -->
+                <div class="transbox">
+                         
+                    <!-- Uploading An Image --> 
+                    <form method="post" enctype="multipart/form-data" >
+                        
+                        <!-- <input type="file" name="uploadedimage[]" multiple> -->
+                        
+                        <div class="image-upload">
+                            <label for="file-input">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Ic_attach_file_48px.svg/120px-Ic_attach_file_48px.svg.png"/>
+                            </label>
 
-       <!-- Uploading An Image -->
-        <form method="post" enctype="multipart/form-data" >
-
-          <input type="file" name="uploadedimage[]" multiple>
-          <input type="submit" value="Upload Image" enctype="multipart/form-data">
-          <p><a href="https://drive.google.com/drive/u/1/folders/0B0Uz_T5t_1jOaWMyNmh5UURaaDQ">
-            If you are uploading more than 20 images, upload them directly here</a></p>
-        </form>
+                            <input id="file-input" type="file"/>
+                        </div>
+                        
+                        <div class="button">
+                            <!-- Upload Button Image -->
+                            <button type="submit" style="background-color:transparent; border-color:transparent;"> 
+                                <img src="http://simpleicon.com/wp-content/uploads/cloud-upload-1.png" height="60" margin-top: 400px/>
+                            </button>
+                        </div>
+                        
+                        <div class="many">
+                            <!-- More Than 20 Images Upload-->
+                            <p><a href="https://drive.google.com/drive/u/1/folders/0B0Uz_T5t_1jOaWMyNmh5UURaaDQ">
+                                If you are uploading more than 20 images, upload them directly here</a></p>
+                        </div>
+                         <!-- Space -->
+                        <pre class="tab"> </pre>
+                        
+                    </form>
+                
+                </div>
+            </div>
 
         <?php
-
         function refreshDataBaseFromDrive($driveService, $folderId,$link) {
           $pageToken = null;
 
@@ -258,13 +337,8 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
           $lastResult = mysqli_query($link, "SELECT last_name FROM user_info WHERE uid = $displayUID");
           $first = $firstResult->fetch_assoc()['first_name'];
           $last = $lastResult->fetch_assoc()['last_name'];
-
-
     ?>
-
-          <!-- for adding pages, add a counter: when hits certain num, point to next page -->
-
-
+            
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/10.3.5/lazyload.min.js"></script>
   <script text="text/javascript"> var myLazyLoad = new LazyLoad(); </script>
       <div class="row">
@@ -284,7 +358,8 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                               <button type="submit">Email <?php echo $first ?></button>
                               <button name="reportButton" type="submit" onClick="reportPhoto();">Report This Photo</button>
                           </form>
-
+  
+                        
                            <!-- Space -->
                           <pre class="tab"> </pre>
                         
@@ -437,6 +512,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/popper/popper.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+             
 
     </div>
          <!-- Footer -->
