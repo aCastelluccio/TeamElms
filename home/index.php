@@ -205,7 +205,8 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                     <!-- Uploading An Image --> 
                     <form method="post" enctype="multipart/form-data" >
                         
-                        <!-- <input type="file" name="uploadedimage[]" multiple> -->
+                        <!-- ORIGINAL 'CHOOSING FILES' BUTTON -->
+                        <input type="file" name="uploadedimage[]" multiple> 
                         
                         <div class="image-upload">
                             <label for="file-input">
