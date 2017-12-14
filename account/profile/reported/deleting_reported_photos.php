@@ -24,7 +24,7 @@ function getClient(){
     return $client;
 }
 
-function gDrive() {
+function getDrive() {
     $client = getClient();
     $client->addScope(Google_Service_Drive::DRIVE);
     $drive = new Google_Service_Drive($client);

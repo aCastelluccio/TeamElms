@@ -199,8 +199,8 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                     <style>
                         input.uploadinput {
                             margin-top: 45px;
-                            margin-right: 100px;
-                        }
+ +                          margin-right: 100px;
+ +                      }
                     </style>
 
                     <!-- Uploading An Image -->
@@ -230,7 +230,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
                         <div class="button">
                             <!-- Upload Button Image -->
-                            <button type="submit" style="background-color:transparent; border-color:transparent;">
+                            <button class="uploadbutton" type="submit" style="background-color:transparent; border-color:transparent;">
                                 <img src="http://simpleicon.com/wp-content/uploads/cloud-upload-1.png" height="60" margin-top: 400px/>
                             </button>
                         </div>
