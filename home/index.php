@@ -193,13 +193,29 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                 
                 <!-- Background Box -->
                 <div class="transbox">
+                    
+                    <style>
+                        input.uploadinput {
+                            margin-top: 45px;
+                            margin-right: 100px;
+                        }
+                    </style>
                          
                     <!-- Uploading An Image --> 
                     <form method="post" enctype="multipart/form-data" >
                         
                         <!-- ORIGINAL 'CHOOSING FILES' BUTTON -->
-                        <input type="file" name="uploadedimage[]" multiple> 
+                        <input class="uploadinput" for="uploadedimage[]" type="file" name="uploadedimage[]" multiple> 
                         
+<!--
+                        <div class="image-upload"> 
+                        <label>
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Ic_attach_file_48px.svg/120px-Ic_attach_file_48px.svg.png"/>
+                        </label>
+                        </div>
+-->
+                        
+<!--
                         <div class="image-upload">
                             <label for="file-input">
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Ic_attach_file_48px.svg/120px-Ic_attach_file_48px.svg.png"/>
@@ -207,7 +223,9 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
                             <input id="file-input" type="file"/>
                         </div>
-                        
+
+-->
+                                                
                         <div class="button">
                             <!-- Upload Button Image -->
                             <button type="submit" style="background-color:transparent; border-color:transparent;"> 

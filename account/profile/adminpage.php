@@ -125,6 +125,7 @@ $updatedAt = date('h:i a');
         
     <?php } ?>
             
+<!--
       <div class="card mb-3">
         <div class="card-header">
           <i class="fa fa-area-chart"></i> Picture Posting Activity</div>
@@ -138,6 +139,7 @@ $updatedAt = date('h:i a');
           </div>
         </div>
       </div>
+-->
       
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
