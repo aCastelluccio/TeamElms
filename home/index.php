@@ -83,8 +83,8 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
         }
 
         .button img {
-            margin-right: -100px;
-            margin-top: -120px;
+            margin-right: -300px;
+            margin-top: -90px;
         }
 
         .many p {
