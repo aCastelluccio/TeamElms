@@ -52,7 +52,7 @@ $updatedAt = date('h:i a');
           <i class="fa fa-table"></i> Reported Photos</div>
         <div class="card-body">
           <div class="table-responsive">
-            <form action="./deleting_reported_photos.php" method="post">
+            <form action="deleting_reported_photos.php" method="post">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
@@ -72,7 +72,7 @@ $updatedAt = date('h:i a');
                           <div>
                               <label>
                                 <input type="checkbox" class="radio" id="checkbox[]" name="checkbox[]" value="Yes"/>Yes
-                                <input type="hidden" class="radio" id="checkbox[]" name="checkbox[]" value=""/>
+                                <input type="hidden" class="radio" id="checkbox[]" name="checkbox[]" value="<?php echo $result[$count1]['images_path']; ?>"/>
                               </label>
                           </div>
                       </td>

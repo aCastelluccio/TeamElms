@@ -12,6 +12,8 @@ include ("resize-class.php");
 include("../account/authconnect.php");
 require_once __DIR__.'../../vendor/autoload.php';
 
+$_SESSION['emailPoster'] = "";
+
 if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === false)) { ?>
     <script text="text/javascript">
         alert("You must be logged in before you can visit this page.");
@@ -90,7 +92,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
               <a class="nav-link" href="./favorites/">Favorites</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../account/profile/">Profile</a>
+              <a class="nav-link" href="<?php if ($_SESSION['admin'] === true) { echo '../account/profile/'; } ?>"><?php if ($_SESSION['admin'] === true) { echo 'Profile'; } ?></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="../account/logout.php">Logout</a>
@@ -172,6 +174,13 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
             $client->refreshToken('1/mZ9Ja7eNiQFrCJbETDKuYCiiPo2qppWYABYi5oTPXv0');
             return $client;
         }
+        
+        function gDrive() {
+            $client = getClient();
+            $client->addScope(Google_Service_Drive::DRIVE);
+            $drive = new Google_Service_Drive($client);
+            return $drive;
+        }
 
         function GetImageExtension($imagetype) {
            if(empty($imagetype)) return false;
@@ -184,9 +193,8 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                default: return false;
            }
         }
-        $client = getClient();
-        $client->addScope(Google_Service_Drive::DRIVE);
-        $drive = new Google_Service_Drive($client);
+
+        $drive = gDrive();
         $folderId = '0B0Uz_T5t_1jOaWMyNmh5UURaaDQ';
 
         refreshDataBaseFromDrive($drive,$folderId,$link);
@@ -256,15 +264,20 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
           $displayUID = $auth->getUID($posterEmail);
           $firstResult = mysqli_query($link, "SELECT first_name FROM user_info WHERE uid = $displayUID");
           $lastResult = mysqli_query($link, "SELECT last_name FROM user_info WHERE uid = $displayUID");
-          $first = $firstResult->fetch_assoc()['first_name'];
-          $last = $lastResult->fetch_assoc()['last_name'];
+          if (!$firstResult && $lastResult) {
+              $first = '';
+              $last = '';
+          } else {
+              $first = $firstResult->fetch_assoc()['first_name'];
+              $last = $lastResult->fetch_assoc()['last_name'];   
+          }
 
 
     ?>
 
           <!-- for adding pages, add a counter: when hits certain num, point to next page -->
 
-
+          
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/10.3.5/lazyload.min.js"></script>
   <script text="text/javascript"> var myLazyLoad = new LazyLoad(); </script>
       <div class="row">
@@ -273,6 +286,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
           <a>
             <script>
             </script>
+            
             <img name="picture" class="img-fluid rounded mb-3 mb-md-0" data-src="https://drive.google.com/uc?export=view&id=<?php echo $row['images_path']; ?>" height="50%" width="50%" >
               <div class="caption">
                 <div id="some-div">
@@ -280,9 +294,9 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                     <span id="some-element"> 
                         
                             <!-- BUTTONS: REPORT & EMAIL -->
-                          <form method="post">
-                              <button type="submit">Email <?php echo $first ?></button>
-                              <button name="reportButton" type="submit" onClick="reportPhoto();">Report This Photo</button>
+                          <form action="action_to_do.php" method="post">
+                              <button name="emailPoster" type="submit" value="<?php echo $row['images_path']; ?>">Email <?php echo $first; ?></button>
+                              <button name="reportPhoto" type="submit" value="<?php echo $row['images_path']; ?>">Report This Photo</button>
                           </form>
 
                            <!-- Space -->
@@ -306,14 +320,6 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                         
                         <!-- ACTUALLY ADDING A COMMENT -->
                         <script>   
-                        
-                        function reportPhoto() {
-                            alert("<?php echo $row['images_path']; ?>");
-                            <?php
-                            $picture = $row['images_path'];
-                            $success = $dbh->query("UPDATE images_tbl SET reported=1 WHERE images_path = $picture");
-                            ?>
-                        }
                             
                         function hideWarning() {
                           document.getElementById('no_go').style.display = 'none';

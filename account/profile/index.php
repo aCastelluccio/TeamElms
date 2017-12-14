@@ -3,6 +3,10 @@
 
 session_start();
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require("../../vendor/phpauth/phpauth/Auth.php");
 include("../../vendor/phpauth/phpauth/Config.php");
 
@@ -16,15 +20,21 @@ if (isset($_SESSION['admin']) && ($_SESSION['admin'] === true)) { ?>
     </script>
 <?php }
 
-$sth = $dbh->prepare("SELECT u.email, ui.first_name, ui.last_name FROM user_info ui JOIN users u ON ui.uid = u.id WHERE ui.approved = 1 ");
+if (isset($_SESSION['emailPoster']) && $_SESSION['emailPoster'] !== "") {
+    $emailS = $_SESSION['emailPoster'];
+} else {
+    $emailS = $_SESSION['email'];
+}
+
+$sth = $dbh->prepare("SELECT u.email, ui.first_name, ui.last_name FROM user_info ui JOIN users u ON ui.uid = u.id WHERE ui.approved = 1 AND u.email = '$emailS' ");
 $sth->execute();
 $result = $sth->fetchAll(PDO::FETCH_ASSOC);
 
 
 //Implement if more than one user 
 
-function searchForUser($name, $dbh) {
-    $sth = $dbh->prepare("SELECT u.email, ui.first_name, ui.last_name FROM user_info ui JOIN users u ON ui.uid = u.id WHERE ui.approved = 1 AND (first_name LIKE '$name%' OR last_name LIKE '$name%')");
+function searchForUser($email, $dbh) {
+    $sth = $dbh->prepare("SELECT u.email, ui.first_name, ui.last_name FROM user_info ui JOIN users u ON ui.uid = u.id WHERE ui.approved = 1 AND u.email = '$email' ");
     $sth->execute();
     $search = $sth->fetchAll(PDO::FETCH_ASSOC);
     
@@ -34,8 +44,8 @@ function searchForUser($name, $dbh) {
 
 if (isset($_GET['user'])) {
     
-    $name = $_GET['user'];
-    $search = searchForUser($name, $dbh);
+    $email = $_GET['user'];
+    $search = searchForUser($email, $dbh);
     
     if($search) {
         $result[0]['first_name'] = $search[0]['first_name'];
@@ -57,7 +67,7 @@ if (isset($_GET['user'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <title>Acorn Academy - My Profile</title>
+    <title>Acorn Academy - User Profiles</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../_layout/css/bootstrap.min.css" rel="stylesheet">
@@ -72,7 +82,7 @@ if (isset($_GET['user'])) {
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">My Profile</a>
+        <a class="navbar-brand" href="#"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -83,11 +93,13 @@ if (isset($_GET['user'])) {
                 <span class="sr-only">(current)</span>
               </a>
             </li>
+<!--
             <li class="nav-item">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
-                    <input name="user" id="user" type="text" placeholder="Enter a name.">
+                    <input name="user" id="user" type="text" placeholder="Enter an email.">
                 </form>
             </li>
+-->
           </ul>
         </div>
       </div>
@@ -112,8 +124,6 @@ if (isset($_GET['user'])) {
           <h3 class="my-3">User Details</h3>
           <ul>
             <li>Email Address: <?php echo $result[0]['email'] ?></li>
-            <li>Posts</li>
-            <li>Other account statistics</li>
           </ul>
         </div>
 

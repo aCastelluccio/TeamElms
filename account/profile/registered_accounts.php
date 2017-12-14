@@ -59,7 +59,7 @@ $updatedAt = date('h:i a');
                     <tr>
                       <th>Name <small>* indicates an admin account</small></th>
                       <th>Email</th>
-                      <th>Delete Account?<input type="checkbox" onchange="checkAll(this)"/><small>Select All</small></th>
+                      <th>Delete Account?</th>
                     </tr>
                   </thead>
                   <tbody> <?php
@@ -105,14 +105,14 @@ $updatedAt = date('h:i a');
                      var checkboxes = document.getElementsByTagName('input');
                      if (ele.checked) {
                          for (var i = 0; i < checkboxes.length; i++) {
-                             if (checkboxes[i].type == 'checkbox') {
+                             if (checkboxes[i].type == 'checkbox[]') {
                                  checkboxes[i].checked = true;
                              }
                          }
                      } else {
                          for (var i = 0; i < checkboxes.length; i++) {
                              console.log(i)
-                             if (checkboxes[i].type == 'checkbox') {
+                             if (checkboxes[i].type == 'checkbox[]') {
                                  checkboxes[i].checked = false;
                              }
                          }
