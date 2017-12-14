@@ -386,9 +386,10 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
 
                                    <!-- Space -->
-                                  <pre class="tab"> </pre>
+<!--                                  <pre class="tab"> </pre>-->
 
                                 <!-- ADD A COMMENT -->
+<!--
                                 <div class="warning" id="no_go"></div>
                                 <div class="commentbox-app">
                                   <div class="container">
@@ -402,6 +403,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                                     <button class="remove-all-btn" id="remove-all" type="button">Remove all</button>
                                   </div>
                                 </div>
+-->
 
 
                                 <!-- ACTUALLY ADDING A COMMENT -->
