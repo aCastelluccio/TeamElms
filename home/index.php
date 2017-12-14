@@ -163,7 +163,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="./about/">About</a>
+                  <a class="nav-link" href="https://drive.google.com/drive/folders/15R9oRsxfvnKGWYH7MYGawREnpPwsoeV5">About</a>
                 </li>
 
                 <li class="nav-item">

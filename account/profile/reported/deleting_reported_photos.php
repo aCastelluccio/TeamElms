@@ -14,21 +14,21 @@ $auth   = new PHPAuth\Auth($dbh, $config);
 require_once("../../../vendor/autoload.php");
 
 function getClient(){
-            $client = new Google_Client();
-            $client->setClientId('1060065924858-b94sofn2u34i30j887hq5udsb1sd4tbr.apps.googleusercontent.com');
-            $client->setClientSecret('K6NBjcFIfzEkVuQRNnYGuXuq');
-            $client->setApprovalPrompt('auto');
-            $client->setAccessType('online');
-            $client->getAccessToken('ya29.GlvsBF_2sD_Bn9ioOzePSiOgEJC2NiLZ2HbG1LTclPAv3h7sGDWsjlTgJ8vaVdgSuf2_wvLz88Lj7CC6Y9oWkEpAbQEzdqmZwdoM_XXO9QOkb67giNzgMVoqeKIq');
-            $client->refreshToken('1/mZ9Ja7eNiQFrCJbETDKuYCiiPo2qppWYABYi5oTPXv0');
-            return $client;
+    $client = new Google_Client();
+    $client->setClientId('1032449672696-e2n625h5ubahbapa6lkcpm32chgjlvs5.apps.googleusercontent.com');
+    $client->setClientSecret('lnRveJrKlA8TnhgBq5gqK0Fb');
+    $client->setApprovalPrompt('auto');
+    $client->setAccessType('online');
+    $client->getAccessToken('ya29.GlsiBWv9h15VC_wM71t8ZFtD9ZXzAQ2HKAik0nUEUHbklyrEkhK7wsZrRw5EDtGUA4fgrMtIePcVEXFgW_sr5OG67pCmkDUv7SCGLzaDasN2o3BYASAyzOxPZ0J0');
+    $client->refreshToken('1/hYph71pGWjL6JfqzQE57i5_vQqemlum7AgOuJrDmvBQ');
+    return $client;
 }
-        
-function getDrive() {
-            $client = getClient();
-            $client->addScope(Google_Service_Drive::DRIVE);
-            $drive = new Google_Service_Drive($client);
-            return $drive;
+
+function gDrive() {
+    $client = getClient();
+    $client->addScope(Google_Service_Drive::DRIVE);
+    $drive = new Google_Service_Drive($client);
+    return $drive;
 }
 
 function deleteFile($drive, $fileId) {
