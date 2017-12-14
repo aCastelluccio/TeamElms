@@ -285,12 +285,12 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
         function getClient(){
             $client = new Google_Client();
-            $client->setClientId('1032449672696-fntg6jvhb8a44s0gqgei1i0pmng36c1g.apps.googleusercontent.com');
-            $client->setClientSecret('36e7O7nQWTfX1nzYCGpTD4Z1');
+            $client->setClientId('1032449672696-e2n625h5ubahbapa6lkcpm32chgjlvs5.apps.googleusercontent.com');
+            $client->setClientSecret('lnRveJrKlA8TnhgBq5gqK0Fb');
             $client->setApprovalPrompt('auto');
             $client->setAccessType('online');
-            $client->getAccessToken('ya29.GlsiBQ9fzDpdxnyHjGkacTJZhTy5zD6sFK6v0j8NZquRTN2PZgP1FgZi8Mblia3m6O9owiqwAVa9x_aaE9QSGHxW7a9Anbms11icukcNJ8wnsfU7IO3e1jMVYi03');
-            $client->refreshToken('1/tzlXgEN8FFCP_3vK88wFv4K1TQkbw9M_crZMJv1gFPg');
+            $client->getAccessToken('ya29.GlsiBWv9h15VC_wM71t8ZFtD9ZXzAQ2HKAik0nUEUHbklyrEkhK7wsZrRw5EDtGUA4fgrMtIePcVEXFgW_sr5OG67pCmkDUv7SCGLzaDasN2o3BYASAyzOxPZ0J0');
+            $client->refreshToken('1/hYph71pGWjL6JfqzQE57i5_vQqemlum7AgOuJrDmvBQ');
             return $client;
         }
 
