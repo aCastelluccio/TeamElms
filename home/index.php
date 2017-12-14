@@ -9,9 +9,9 @@ include("mysqlconnect.php");
 include ("resize-class.php");
 include("../account/authconnect.php");
 require_once __DIR__.'../../vendor/autoload.php';
-      
+
 $_SESSION['emailPoster'] = "";
-      
+
 if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === false)) { ?>
     <script text="text/javascript">
         alert("You must be logged in before you can visit this page.");
@@ -35,35 +35,35 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
     <!-- CSS -->
     <style>
-        
+
         @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
         body {
             padding-top: 70px;
             background: #f2f2f2;
             font-family: Lato;
         }
-        
-        h1, h2 { 
+
+        h1, h2 {
             font-size: 33px;
             color: white;
             padding-top: 10px;
             padding-right: 5px;
         }
-        
+
         .starter-template {
             padding: 5px 5px;
             text-align: center;
         }
-        
+
         .pagination {
             margin-bottom: 5px;
         }
-        
+
         div {
             padding-top: 10px;
             margin: 0 auto;
         }
- 
+
         div.transbox {
             margin-left: 250px;
             height: 150px;
@@ -71,7 +71,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
             background-color: #e6e6e6;
             border: 2px dashed black;
         }
-        
+
         .image-upload > input {
             display: none;
         }
@@ -81,22 +81,22 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
             margin-right: 100px;
             margin-top: 20px;
         }
-        
+
         .button img {
             margin-right: -100px;
             margin-top: -120px;
         }
-        
+
         .many p {
             margin-top: -50px;
         }
-        
+
         .thumbnail img {
             background:transparent;
             padding:14px;
             border:2px solid #999999;
         }
-        
+
       /* Create four equal columns that floats next to each other */
         .column {
             float: left;
@@ -125,9 +125,9 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                 width: 100%;
            }
         }
-  </style> 
-      
-      
+  </style>
+
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="home_page">
@@ -140,16 +140,16 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
     <link href="css/1-col-portfolio.css" rel="stylesheet">
 
   </head>
-    
+
   <body>
-    <!-- Navigation -->      
+    <!-- Navigation -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
           <div class="container">
-              
+
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
               </button>
-              
+
               <h1>Acorn</h1>
               <h2>Academy</h2>
 
@@ -176,7 +176,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                 <li class="nav-item">
                   <a class="nav-link" href="../account/logout.php">Logout</a>
                 </li>
-                
+
                 </ul>
               </div>
           </div>
@@ -184,42 +184,39 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
     <!-- Page Content -->
     <div class="container">
-        
+
         <!-- Space -->
         <pre class="tab"> </pre>
 
         <!-- Page Heading -->
         <div style = "text-align: center" >
- 
+
             <div class="background">
-                
+
                 <!-- Background Box -->
                 <div class="transbox">
-                    
+
                     <style>
                         input.uploadinput {
                             margin-top: 45px;
-                            margin-right: 200px;
-                        }
-                        button.uploadbutton {
-                            margin-left: 200px;
+                            margin-right: 100px;
                         }
                     </style>
-                         
-                    <!-- Uploading An Image --> 
+
+                    <!-- Uploading An Image -->
                     <form method="post" enctype="multipart/form-data" >
-                        
+
                         <!-- ORIGINAL 'CHOOSING FILES' BUTTON -->
-                        <input class="uploadinput" for="uploadedimage[]" type="file" name="uploadedimage[]" multiple> 
-                        
+                        <input class="uploadinput" for="uploadedimage[]" type="file" name="uploadedimage[]" multiple>
+
 <!--
-                        <div class="image-upload"> 
+                        <div class="image-upload">
                         <label>
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Ic_attach_file_48px.svg/120px-Ic_attach_file_48px.svg.png"/>
                         </label>
                         </div>
 -->
-                        
+
 <!--
                         <div class="image-upload">
                             <label for="file-input">
@@ -230,14 +227,14 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                         </div>
 
 -->
-                                                
+
                         <div class="button">
                             <!-- Upload Button Image -->
-                            <button class="uploadbutton" type="submit" style="background-color:transparent; border-color:transparent;"> 
+                            <button type="submit" style="background-color:transparent; border-color:transparent;">
                                 <img src="http://simpleicon.com/wp-content/uploads/cloud-upload-1.png" height="60" margin-top: 400px/>
                             </button>
                         </div>
-                        
+
                         <div class="many">
                             <!-- More Than 20 Images Upload-->
                             <p><a href="https://drive.google.com/drive/u/1/folders/0B0Uz_T5t_1jOaWMyNmh5UURaaDQ">
@@ -245,9 +242,9 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                         </div>
                          <!-- Space -->
                         <pre class="tab"> </pre>
-                        
+
                     </form>
-                
+
                 </div>
             </div>
 
@@ -255,7 +252,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
         function refreshDataBaseFromDrive($driveService, $folderId,$link) {
           $pageToken = null;
           $response = $driveService->files->listFiles(array(
-            'q' => "'0B0Uz_T5t_1jOaWMyNmh5UURaaDQ' in parents and trashed = false",
+            'q' => "'1060dPAJ7b2q1haJSQvwPjCzshDQRUfbB' in parents and trashed = false",
             'spaces' => 'drive',
             'pageToken' => $pageToken,
             'fields' => 'nextPageToken, files(id, name)',
@@ -273,7 +270,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
               mysqli_query($link, $query_upload) or die("Error: #1");
             }
           }
-            
+
           $result = mysqli_query($link, $query);
           while($row = mysqli_fetch_array($result)){
             $found = false;
@@ -287,18 +284,18 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
             }
           }
         }
-            
+
         function getClient(){
             $client = new Google_Client();
-            $client->setClientId('1060065924858-b94sofn2u34i30j887hq5udsb1sd4tbr.apps.googleusercontent.com');
-            $client->setClientSecret('K6NBjcFIfzEkVuQRNnYGuXuq');
+            $client->setClientId('1032449672696-e2n625h5ubahbapa6lkcpm32chgjlvs5.apps.googleusercontent.com');
+            $client->setClientSecret('lnRveJrKlA8TnhgBq5gqK0Fb');
             $client->setApprovalPrompt('auto');
             $client->setAccessType('online');
-            $client->getAccessToken('ya29.GlvsBF_2sD_Bn9ioOzePSiOgEJC2NiLZ2HbG1LTclPAv3h7sGDWsjlTgJ8vaVdgSuf2_wvLz88Lj7CC6Y9oWkEpAbQEzdqmZwdoM_XXO9QOkb67giNzgMVoqeKIq');
-            $client->refreshToken('1/mZ9Ja7eNiQFrCJbETDKuYCiiPo2qppWYABYi5oTPXv0');
+            $client->getAccessToken('ya29.GlsiBWv9h15VC_wM71t8ZFtD9ZXzAQ2HKAik0nUEUHbklyrEkhK7wsZrRw5EDtGUA4fgrMtIePcVEXFgW_sr5OG67pCmkDUv7SCGLzaDasN2o3BYASAyzOxPZ0J0');
+            $client->refreshToken('1/hYph71pGWjL6JfqzQE57i5_vQqemlum7AgOuJrDmvBQ');
             return $client;
         }
-        
+
         function gDrive() {
             $client = getClient();
             $client->addScope(Google_Service_Drive::DRIVE);
@@ -319,7 +316,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
         }
 
         $drive = gDrive();
-        $folderId = '0B0Uz_T5t_1jOaWMyNmh5UURaaDQ';
+        $folderId = '1060dPAJ7b2q1haJSQvwPjCzshDQRUfbB';
 
         refreshDataBaseFromDrive($drive,$folderId,$link);
 
@@ -358,7 +355,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                   window.location.href = "./confirm.php";
               </script>
 
-          <?php } 
+          <?php }
         }
       ?>
 
@@ -386,20 +383,20 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
           $first = $firstResult->fetch_assoc()['first_name'];
           $last = $lastResult->fetch_assoc()['last_name'];
     ?>
-            
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/10.3.5/lazyload.min.js"></script>
   <script text="text/javascript"> var myLazyLoad = new LazyLoad(); </script>
-   
+
             <!-- Adds The Images -->
               <div class="row">
                 <div class="col-md-5">
                     <div class="thumbnail">
                   <a>
-                    <img name="picture" class="img-fluid rounded mb-3 mb-md-0" data-src="https://drive.google.com/uc?export=view&id=<?php echo $row['images_path']; ?>" height="50%" width="50%" >              
+                    <img name="picture" class="img-fluid rounded mb-3 mb-md-0" data-src="https://drive.google.com/uc?export=view&id=<?php echo $row['images_path']; ?>" height="50%" width="50%" >
                       <div class="caption">
                         <div id="some-div">
                         <p><?php echo $first . ' ' . $last; ?></p>
-                            <span id="some-element"> 
+                            <span id="some-element">
 
                                     <!-- BUTTONS: REPORT & EMAIL -->
                                   <form action="action_to_do.php" method="post">
@@ -430,7 +427,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
 
 
                                 <!-- ACTUALLY ADDING A COMMENT -->
-                                <script>   
+                                <script>
                                 function reportPhoto() {
                                     alert("<?php echo $row['images_path']; ?>");
                                     <?php
@@ -445,7 +442,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                                   document.getElementById('no_go').style.display = 'block';
                                   document.getElementById('no_go').innerHTML = '<strong>Warning:</strong> App will not work if local storage is disabled or unsupported.';
                                   console.warn('App will not work if local storage is disabled or unsupported.');
-                                } 
+                                }
                                 function supportsLocalStorage () {
                                   return typeof localStorage !== 'undefined';
                                 }
@@ -469,7 +466,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                                   if (comments) {
                                     for (var i = 0; i < comments.length; i++) {
                                       appendToStream(stream, comments[i], i);
-                                    }    
+                                    }
                                   }
                                 }
                                 function clearComments(stream) {
@@ -500,12 +497,12 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                                         return;
                                       }
                                       comments.push(value);
-                                      localStorage.setItem('comments', JSON.stringify(comments));  
+                                      localStorage.setItem('comments', JSON.stringify(comments));
                                       appendToStream(commentList, commStr);
-                                      commentInput.value = '';      
+                                      commentInput.value = '';
                                     });
                                   }, true);
-                                }                         
+                                }
                                 </script>
 
                               </span>
@@ -540,12 +537,12 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
     </div>
 
     <!-- /.container -->
-        
+
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/popper/popper.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-             
+
 
     </div>
          <!-- Footer -->
@@ -555,7 +552,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
       </div>
       <!-- /.container -->
     </footer>
-      
+
 </body>
 </head>
 </html>
