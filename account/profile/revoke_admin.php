@@ -17,6 +17,9 @@ if (!isset($items)) {
 for ($i = 0;  $i < count($items); $i++) {
     if ($items[$i] === "Yes") {
         $email = $items[$i+1];
+        if ($email === "default") {
+            continue;
+        }
         $uid = $auth->getUID($email);
         $dbh->query("UPDATE user_info SET isAdmin=0 WHERE uid = $uid");
     }
