@@ -68,6 +68,9 @@ $updatedAt = date('h:i a');
             <li>
               <a href="./set_admin_account.php">Set an Account to Admin</a>
             </li>
+            <li>
+                <a href="./remove_admin_account.php">Revoke Admin Privileges</a>
+            </li>
           </ul>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components2">

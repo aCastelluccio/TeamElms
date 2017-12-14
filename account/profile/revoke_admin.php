@@ -1,9 +1,4 @@
-<!DOCTYPE html>
 <?php
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 require("../../vendor/phpauth/phpauth/Auth.php");
 include("../../vendor/phpauth/phpauth/Config.php");
@@ -15,24 +10,19 @@ $auth   = new PHPAuth\Auth($dbh, $config);
 $items = $_POST['checkbox'];
 
 if (!isset($items)) {
-    header('Location: ./registered_accounts.php');
+    header('Location: ./remove_admin_account.php');
     exit();
 }
 
 for ($i = 0;  $i < count($items); $i++) {
     if ($items[$i] === "Yes") {
         $email = $items[$i+1];
-        if ($email === "default") {
-            continue;
-        }
         $uid = $auth->getUID($email);
-        $dbh->query("DELETE FROM users WHERE id = $uid");
-        $dbh->query("DELETE FROM user_info WHERE uid = $uid");
+        $dbh->query("UPDATE user_info SET isAdmin=0 WHERE uid = $uid");
     }
 }
 
-?>
+header('Location: ./remove_admin_account.php');
+exit()
 
-<script text="text/javascript">
-window.location.href = './registered_accounts.php';
-</script>
+?>
