@@ -17,7 +17,9 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
         alert("You must be logged in before you can visit this page.");
         window.location.href = '../account/';
     </script>
-<?php } ?>
+<?php 
+} 
+?>
 
 <html lang="en">
 <head>
@@ -239,7 +241,7 @@ if (!isset($_SESSION['active_session']) || ($_SESSION['active_session'] === fals
                         <div class="many">
                             <!-- More Than 20 Images Upload-->
                             <p><a href="https://drive.google.com/drive/u/1/folders/0B0Uz_T5t_1jOaWMyNmh5UURaaDQ">
-                                If you are uploading more than 20 images, upload them directly here</a></p>
+                                <?php if ($_SESSION['admin'] === true) { echo 'If you are uploading more than 20 images, upload them directly here'; } ?></a></p>
                         </div>
                          <!-- Space -->
                         <pre class="tab"> </pre>
